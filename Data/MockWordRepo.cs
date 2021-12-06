@@ -8,6 +8,11 @@ namespace Lingo.Data{
       throw new NotImplementedException();
     }
 
+    public void DeleteWord(Word word)
+    {
+      throw new NotImplementedException();
+    }
+
     public IEnumerable<Word> GetAllWords()
     {
       var words = new List<Word>
@@ -26,6 +31,11 @@ namespace Lingo.Data{
     }
 
     public bool SaveChanges()
+    {
+      throw new NotImplementedException();
+    }
+
+    public void UpdateWord(Word word)
     {
       throw new NotImplementedException();
     }

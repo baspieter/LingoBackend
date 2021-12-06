@@ -54,5 +54,40 @@ namespace Lingo.Controllers
 
       return CreatedAtRoute(nameof(GetWordById), new {Id = wordReadDto.Id}, wordReadDto);
     }
+
+    // PUT words/{id}
+    [HttpPut("{id}")]
+    public ActionResult UpdateWord(int id, WordUpdateDto wordUpdateDto)
+    {
+      var wordModelFromRepo = _repository.GetWordById(id);
+      if(wordModelFromRepo == null)
+      {
+        return NotFound();
+      }
+
+      _mapper.Map(wordUpdateDto, wordModelFromRepo);
+
+      _repository.UpdateWord(wordModelFromRepo);
+
+      _repository.SaveChanges();
+
+      return NoContent();
+    }
+
+    //DELETE words/{id}
+    [HttpDelete("{id}")]
+    public ActionResult DeleteWord(int id)
+    {
+      var wordModelFromRepo = _repository.GetWordById(id);
+      if(wordModelFromRepo == null)
+      {
+        return NotFound();
+      }
+
+      _repository.DeleteWord(wordModelFromRepo);
+      _repository.SaveChanges();
+
+      return NoContent();
+    }
   }
 }

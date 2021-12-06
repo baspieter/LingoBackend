@@ -11,6 +11,8 @@ namespace Lingo.Profiles
       // Source -> Target
       CreateMap<Word, WordReadDto>();
       CreateMap<WordCreateDto, Word>();
+      CreateMap<WordUpdateDto, Word>();
+      CreateMap<Word, WordUpdateDto>();
     }
   }
 }

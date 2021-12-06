@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 namespace Lingo.Dtos
 {
-  public class WordCreateDto
+  public class WordUpdateDto
   {
     [Required]
     public string? Name { get; set; }

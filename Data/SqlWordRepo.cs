@@ -20,6 +20,16 @@ namespace Lingo.Data
       _context.Word.Add(word);
     }
 
+    public void DeleteWord(Word word)
+    {
+      if(word == null)
+      {
+        throw new ArgumentNullException(nameof(word));
+      }
+
+      _context.Word.Remove(word);
+    }
+
     public IEnumerable<Word> GetAllWords()
     {
       return _context.Word.ToList();
@@ -33,6 +43,11 @@ namespace Lingo.Data
     public bool SaveChanges()
     {
       return (_context.SaveChanges() >= 0);
+    }
+
+    public void UpdateWord(Word word)
+    {
+      // Nothing
     }
   }
 }
