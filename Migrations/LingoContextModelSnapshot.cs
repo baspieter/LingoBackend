@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Lingo.Migrations
 {
-    [DbContext(typeof(WordContext))]
-    partial class WordContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(LingoContext))]
+    partial class LingoContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -22,6 +22,26 @@ namespace Lingo.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Lingo.Models.FinalWord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_final_word");
+
+                    b.ToTable("final_word", (string)null);
+                });
+
             modelBuilder.Entity("Lingo.Models.Game", b =>
                 {
                     b.Property<int>("Id")
@@ -30,6 +50,10 @@ namespace Lingo.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FinalWordId")
+                        .HasColumnType("integer")
+                        .HasColumnName("final_word_id");
 
                     b.Property<List<char>>("FinalWordProgress")
                         .IsRequired()
@@ -54,6 +78,9 @@ namespace Lingo.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_game");
+
+                    b.HasIndex("FinalWordId")
+                        .HasDatabaseName("ix_game_final_word_id");
 
                     b.ToTable("game", (string)null);
                 });
@@ -98,25 +125,42 @@ namespace Lingo.Migrations
                     b.ToTable("word", (string)null);
                 });
 
+            modelBuilder.Entity("Lingo.Models.Game", b =>
+                {
+                    b.HasOne("Lingo.Models.FinalWord", "FinalWord")
+                        .WithMany("Games")
+                        .HasForeignKey("FinalWordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_game_final_word_final_word_id");
+
+                    b.Navigation("FinalWord");
+                });
+
             modelBuilder.Entity("Lingo.Models.GameWord", b =>
                 {
-                    b.HasOne("Lingo.Models.Word", "Word")
+                    b.HasOne("Lingo.Models.Game", "Game")
                         .WithMany("GameWords")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_game_word_word_word_id");
+                        .HasConstraintName("fk_game_word_game_game_id");
 
-                    b.HasOne("Lingo.Models.Game", "Game")
+                    b.HasOne("Lingo.Models.Word", "Word")
                         .WithMany("GameWords")
                         .HasForeignKey("WordId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_game_word_game_game_id");
+                        .HasConstraintName("fk_game_word_word_word_id");
 
                     b.Navigation("Game");
 
                     b.Navigation("Word");
+                });
+
+            modelBuilder.Entity("Lingo.Models.FinalWord", b =>
+                {
+                    b.Navigation("Games");
                 });
 
             modelBuilder.Entity("Lingo.Models.Game", b =>

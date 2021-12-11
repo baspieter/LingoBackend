@@ -11,20 +11,16 @@ namespace Lingo.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "game",
+                name: "final_word",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    round = table.Column<int>(type: "integer", nullable: false),
-                    status = table.Column<int>(type: "integer", nullable: false),
-                    final_word_progress = table.Column<List<char>>(type: "character(1)[]", nullable: false),
-                    green_balls = table.Column<int>(type: "integer", nullable: false),
-                    red_balls = table.Column<int>(type: "integer", nullable: false)
+                    name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_game", x => x.id);
+                    table.PrimaryKey("pk_final_word", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,6 +37,30 @@ namespace Lingo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "game",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    round = table.Column<int>(type: "integer", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
+                    final_word_progress = table.Column<List<char>>(type: "character(1)[]", nullable: false),
+                    green_balls = table.Column<int>(type: "integer", nullable: false),
+                    red_balls = table.Column<int>(type: "integer", nullable: false),
+                    final_word_id = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_game", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_game_final_word_final_word_id",
+                        column: x => x.final_word_id,
+                        principalTable: "final_word",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "game_word",
                 columns: table => new
                 {
@@ -52,17 +72,22 @@ namespace Lingo.Migrations
                     table.PrimaryKey("pk_game_word", x => new { x.game_id, x.word_id });
                     table.ForeignKey(
                         name: "fk_game_word_game_game_id",
-                        column: x => x.word_id,
+                        column: x => x.game_id,
                         principalTable: "game",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "fk_game_word_word_word_id",
-                        column: x => x.game_id,
+                        column: x => x.word_id,
                         principalTable: "word",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_game_final_word_id",
+                table: "game",
+                column: "final_word_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_game_word_word_id",
@@ -80,6 +105,9 @@ namespace Lingo.Migrations
 
             migrationBuilder.DropTable(
                 name: "word");
+
+            migrationBuilder.DropTable(
+                name: "final_word");
         }
     }
 }

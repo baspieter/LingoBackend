@@ -4,9 +4,10 @@ namespace Lingo.Data
 {
   public class SqlWordRepo : IWordRepo
   {
-    private readonly WordContext _context;
+    private const string V = "Not found";
+    private readonly LingoContext _context;
 
-    public SqlWordRepo(WordContext context)
+    public SqlWordRepo(LingoContext context)
     {
         _context = context;
     }
