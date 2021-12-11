@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-
 namespace Lingo.Models
 {
 
@@ -11,17 +10,30 @@ namespace Lingo.Models
   {
     [Key]
     public int Id { get; set; }
-    // public int Round { get; set; }
-    // public Status Status { get; init; }
-    // public int Score { get; set; }
 
-    public List<int> WordProgress { get; set; }
+    [Required(ErrorMessage = "Required")]
+    public int Round { get; set; }
 
-    // public Game()
-    // {
-    //   Round = 0;
-    //   Status = Status.Active;
-    //   Score = 0;
-    // }
+    [Required(ErrorMessage = "Required")]
+    public Status Status { get; init; }
+    public List<char> FinalWordProgress { get; set; }
+
+    [Required(ErrorMessage = "Required")]
+    public int GreenBalls { get; set; }
+
+    [Required(ErrorMessage = "Required")]
+    public int RedBalls { get; set; }
+
+    public IList<GameWord> GameWords { get; set; }
+
+    public Game()
+    {
+      Round = 0;
+      Status = Status.Active;
+      FinalWordProgress = new List<char> {};
+      GameWords = new List<GameWord> {};
+      GreenBalls = 2;
+      RedBalls = 2;
+    }
   }
 }

@@ -6,7 +6,18 @@ namespace Lingo.Models
   {
     [Key]
     public int Id { get; set; }
-    [Required]
-    public string? Name { get; set; }
+
+    [RegularExpression(@"^.{6,}$", ErrorMessage = "Minimum 6 characters required")]
+    [Required(ErrorMessage = "Required")]
+    [StringLength(6, MinimumLength = 6, ErrorMessage = "Maximum 6 characters")]
+    public string Name { get; set; }
+
+    public IList<GameWord> GameWords { get; set; }
+
+    public Word() 
+    {
+      Name = "";
+      GameWords = new List<GameWord> {};
+    }
   }
 }

@@ -41,10 +41,23 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
 
-    context.Word.Add(new Word() { Name = "Bus" });
-    context.Word.Add(new Word() { Name = "Auto" });
+    context.Word.Add(new Word() { Name = "Bussen" });
 
-    context.Game.Add(new Game() { WordProgress = new List<int> {1,2,3,4}});
+    context.Game.Add(new Game() { FinalWordProgress = new List<char> {'d','d'}});
+
+    context.SaveChanges();
+
+    
+    var word = context.Word.First();
+    var game = context.Game.First();
+
+    
+
+    word.GameWords.Add(new GameWord()
+    {
+        Word = word,
+        Game = game
+    });
     context.SaveChanges();
 }
 
