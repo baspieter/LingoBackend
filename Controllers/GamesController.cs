@@ -2,6 +2,7 @@ using AutoMapper;
 using Lingo.Data;
 using Lingo.Dtos;
 using Lingo.Models;
+using Lingo.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lingo.Controllers
@@ -11,13 +12,17 @@ namespace Lingo.Controllers
   public class GamesController : ControllerBase
   {
     private readonly IGameRepo _repository;
+    private readonly IGameService _gameService;
+    private readonly IUnitOfWork _unitOfWork;
 
     public IMapper _mapper { get; }
 
-    public GamesController(IGameRepo repository, IMapper mapper)
+    public GamesController(IGameRepo repository, IMapper mapper, IGameService gameService, IUnitOfWork unitOfWork)
     {
+      _unitOfWork = unitOfWork;
       _repository = repository;
       _mapper = mapper;
+      _gameService = gameService;
     }
 
     // GET games/{id}
@@ -35,13 +40,14 @@ namespace Lingo.Controllers
 
     // CREATE games
     [HttpPost]
-    public ActionResult <GameReadDto> CreateGame(GameCreateDto gameCreateDto)
+    public async Task<ActionResult<GameReadDto>> CreateGameAsync(GameCreateDto gameCreateDto)
     {
-      var gameModel = _mapper.Map<Game>(gameCreateDto);
-      _repository.CreateGame(gameModel);
-      _repository.SaveChanges();
 
-      var gameReadDto = _mapper.Map<GameReadDto>(gameModel);
+      var game = await _gameService.StartNewGame();
+
+      await _unitOfWork.SaveChangesAsync();
+
+      var gameReadDto = _mapper.Map<GameReadDto>(game);
 
       return CreatedAtRoute(nameof(GetGameById), new {Id = gameReadDto.Id}, gameReadDto);
     }

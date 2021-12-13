@@ -1,4 +1,5 @@
 using Lingo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingo.Data
 {
@@ -20,6 +21,11 @@ namespace Lingo.Data
       } else {
         throw new ArgumentNullException(nameof(finalWord));
       }
+    }
+
+    public async Task<FinalWord> GetFirstRecordAsync()
+    {
+      return ( await _context.FinalWord.SingleAsync(x => x.Id == 1));
     }
 
     public bool SaveChanges()
