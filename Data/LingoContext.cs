@@ -5,9 +5,11 @@ namespace Lingo.Data
 {
   public class LingoContext : DbContext
   {
+    #pragma warning disable 8618, anyothernumber
     public LingoContext(DbContextOptions<LingoContext> opt) : base(opt)
     {
     }
+    #pragma warning restore 8618, anythingelse
 
     public DbSet<Word> Word { get; set; }
     public DbSet<Game> Game { get; set; }
