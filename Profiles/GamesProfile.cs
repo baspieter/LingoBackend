@@ -11,6 +11,8 @@ namespace Lingo.Profiles
       // Source -> Target
       CreateMap<Game, GameReadDto>();
       CreateMap<GameCreateDto, Game>();
+      CreateMap<GameUpdateDto, Game>();
+      CreateMap<Game, GameUpdateDto>();
     }
   }
 }

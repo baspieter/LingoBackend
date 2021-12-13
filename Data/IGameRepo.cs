@@ -7,6 +7,8 @@ namespace Lingo.Data
     bool SaveChanges();
 
     Game GetGameById(int id);
+
+    void UpdateGame(Game game);
     void CreateGame(Game game);
   }
 }

@@ -33,7 +33,7 @@ namespace Lingo.Controllers
       return NotFound();
     }
 
-    // POST games
+    // CREATE games
     [HttpPost]
     public ActionResult <GameReadDto> CreateGame(GameCreateDto gameCreateDto)
     {
@@ -44,6 +44,25 @@ namespace Lingo.Controllers
       var gameReadDto = _mapper.Map<GameReadDto>(gameModel);
 
       return CreatedAtRoute(nameof(GetGameById), new {Id = gameReadDto.Id}, gameReadDto);
+    }
+
+    // EDIT games/{id}
+    [HttpPut("{id}")]
+    public ActionResult UpdateGame(int id, GameUpdateDto gameUpdateDto)
+    {
+      var gameModelFromRepo = _repository.GetGameById(id);
+      if(gameModelFromRepo == null)
+      {
+        return NotFound();
+      }
+
+      _mapper.Map(gameUpdateDto, gameModelFromRepo);
+
+      _repository.UpdateGame(gameModelFromRepo);
+
+      _repository.SaveChanges();
+
+      return NoContent();
     }
   }
 }

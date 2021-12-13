@@ -17,6 +17,8 @@ builder.Services.AddScoped<IWordRepo, SqlWordRepo>();
 
 builder.Services.AddScoped<IGameRepo, SqlGameRepo>();
 
+builder.Services.AddScoped<IFinalWordRepo, SqlFinalWordRepo>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -42,8 +44,8 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
 
-    context.Word.Add(new Word() { Name = "Bussen" });
-    context.Game.Add(new Game() { FinalWordProgress = new List<char> {'d','d'}, FinalWord = new FinalWord() { Name = "EenLangWoord" } });
+    context.Word.Add(new Word() { Name = "Bussen", GameWords = new List<GameWord> {} });
+    context.Game.Add(new Game() { FinalWordProgress = new List<char> {'d','d'}, FinalWord = new FinalWord() { Name = "EenLangWoord" }, GameWords = new List<GameWord> {} });
     context.SaveChanges();
 
     var word = context.Word.First();

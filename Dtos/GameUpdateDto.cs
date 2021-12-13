@@ -1,15 +1,10 @@
 using System.ComponentModel.DataAnnotations;
-namespace Lingo.Models
-{
-    public enum Status
-    {
-      Active, Paused, Finished
-    }
-  public class Game
-  {
-    [Key]
-    public int Id { get; set; }
+using Lingo.Models;
 
+namespace Lingo.Dtos
+{
+  public class GameUpdateDto
+  {
     [Required(ErrorMessage = "Required")]
     public int Round { get; set; }
 
@@ -22,14 +17,5 @@ namespace Lingo.Models
 
     [Required(ErrorMessage = "Required")]
     public int RedBalls { get; set; }
-    public FinalWord FinalWord { get; set; }
-    public IList<GameWord> GameWords { get; set; }
-    public Game()
-    {
-      Round = 0;
-      Status = Status.Active;
-      GreenBalls = 2;
-      RedBalls = 2;
-    }
   }
 }

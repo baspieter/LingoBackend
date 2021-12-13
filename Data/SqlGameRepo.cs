@@ -29,5 +29,10 @@ namespace Lingo.Data
     {
       return (_context.SaveChanges() >= 0);
     }
+
+    public void UpdateGame(Game game)
+    {
+      // Nothing
+    }
   }
 }

@@ -13,11 +13,5 @@ namespace Lingo.Models
     public string Name { get; set; }
 
     public IList<GameWord> GameWords { get; set; }
-
-    public Word() 
-    {
-      Name = "";
-      GameWords = new List<GameWord> {};
-    }
   }
 }
