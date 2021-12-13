@@ -11,25 +11,18 @@ namespace Lingo.Models
     public int Id { get; set; }
 
     [Required(ErrorMessage = "Required")]
-    public int Round { get; set; }
+    public int Round { get; set; } = 0;
 
     [Required(ErrorMessage = "Required")]
-    public Status Status { get; init; }
-    public List<char> FinalWordProgress { get; set; }
+    public Status Status { get; init; } = Status.Active;
+    public List<char>? FinalWordProgress { get; set; }
 
     [Required(ErrorMessage = "Required")]
-    public int GreenBalls { get; set; }
+    public int GreenBalls { get; set; } = 2;
 
     [Required(ErrorMessage = "Required")]
-    public int RedBalls { get; set; }
-    public FinalWord FinalWord { get; set; }
-    public IList<GameWord> GameWords { get; set; }
-    public Game()
-    {
-      Round = 0;
-      Status = Status.Active;
-      GreenBalls = 2;
-      RedBalls = 2;
-    }
+    public int RedBalls { get; set; } = 2;
+    public FinalWord? FinalWord { get; set; }
+    public IList<GameWord>? GameWords { get; set; }
   }
 }

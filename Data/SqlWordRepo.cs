@@ -38,7 +38,13 @@ namespace Lingo.Data
 
     public Word GetWordById(int id)
     {
-      return _context.Word.FirstOrDefault(p => p.Id == id);
+      var word = _context.Word.FirstOrDefault(p => p.Id == id);
+      if(word != null)
+      {
+        return word;
+      } else {
+        throw new ArgumentNullException(nameof(word));
+      }
     }
 
     public bool SaveChanges()

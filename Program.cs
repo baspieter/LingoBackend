@@ -52,12 +52,13 @@ using (var scope = app.Services.CreateScope())
     var game = context.Game.First();
     var finalWord = context.FinalWord.First();
 
-    word.GameWords.Add(new GameWord()
-    {
-        Word = word,
-        Game = game
-    });
-
+    if(word.GameWords != null) {
+        word.GameWords.Add(new GameWord()
+        {
+            Word = word,
+            Game = game
+        });
+    }
     context.SaveChanges();
 }
 

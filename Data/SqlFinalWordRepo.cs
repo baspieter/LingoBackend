@@ -13,7 +13,13 @@ namespace Lingo.Data
 
     public FinalWord GetFinalWordById(int id)
     {
-      return _context.FinalWord.FirstOrDefault(p => p.Id == id);
+      var finalWord = _context.FinalWord.FirstOrDefault(p => p.Id == id);
+      if(finalWord != null)
+      {
+        return finalWord;
+      } else {
+        throw new ArgumentNullException(nameof(finalWord));
+      }
     }
 
     public bool SaveChanges()

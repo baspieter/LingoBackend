@@ -22,7 +22,13 @@ namespace Lingo.Data
 
     public Game GetGameById(int id)
     {
-      return _context.Game.FirstOrDefault(p => p.Id == id);
+      var game = _context.Game.FirstOrDefault(p => p.Id == id);
+      if(game != null)
+      {
+        return game;
+      } else {
+        throw new ArgumentNullException(nameof(game));
+      }
     }
 
     public bool SaveChanges()

@@ -10,7 +10,7 @@ namespace Lingo.Dtos
 
     [Required(ErrorMessage = "Required")]
     public Status Status { get; init; }
-    public List<char> FinalWordProgress { get; set; }
+    public List<char>? FinalWordProgress { get; set; }
 
     [Required(ErrorMessage = "Required")]
     public int GreenBalls { get; set; }
