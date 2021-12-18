@@ -6,6 +6,8 @@ namespace Lingo.Data
   {
     bool SaveChanges();
 
+    IEnumerable<Game> GetAllGames();
+
     Game GetGameById(int id);
 
     void UpdateGame(Game game);

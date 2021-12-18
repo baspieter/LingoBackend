@@ -23,6 +23,7 @@ builder.Services.AddScoped<IFinalWordRepo, SqlFinalWordRepo>();
 builder.Services.AddScoped<IFinalWordService, FinalWordService>();
 builder.Services.AddScoped<IGameService, GameService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IWordService, WordService>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

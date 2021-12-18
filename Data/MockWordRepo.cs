@@ -25,6 +25,11 @@ namespace Lingo.Data{
       return words;
     }
 
+    public Task<Word> GetFirstRecordAsync()
+    {
+      throw new NotImplementedException();
+    }
+
     public Word GetWordById(int id)
     {
       return new Word{Id=0, Name="Auto"};

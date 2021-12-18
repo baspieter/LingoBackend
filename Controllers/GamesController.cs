@@ -25,6 +25,14 @@ namespace Lingo.Controllers
       _gameService = gameService;
     }
 
+    // GET games
+    [HttpGet]
+    public ActionResult <IEnumerable<GameReadDto>> GetAllGames()
+    {
+      var gameItems = _repository.GetAllGames();
+      return Ok(_mapper.Map<IEnumerable<GameReadDto>>(gameItems));
+    }
+
     // GET games/{id}
     [HttpGet("{id}", Name="GetGameById")]
     public ActionResult <GameReadDto> GetGameById(int id)

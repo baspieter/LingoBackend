@@ -10,6 +10,9 @@ namespace Lingo.Profiles
     {
       // Source -> Target
       CreateMap<FinalWord, FinalWordReadDto>();
+      CreateMap<FinalWordCreateDto, FinalWord>();
+      CreateMap<FinalWordUpdateDto, FinalWord>();
+      CreateMap<FinalWord, FinalWordUpdateDto>();
     }
   }
 }

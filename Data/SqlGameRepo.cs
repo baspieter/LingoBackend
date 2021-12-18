@@ -11,6 +11,11 @@ namespace Lingo.Data
         _context = context;
     }
 
+    public IEnumerable<Game> GetAllGames()
+    {
+      return _context.Game.ToList();
+    }
+
     public void CreateGame(Game game)
     {
       if(game == null) {

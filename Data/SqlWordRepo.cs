@@ -1,4 +1,5 @@
 using Lingo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingo.Data
 {
@@ -36,6 +37,11 @@ namespace Lingo.Data
       return _context.Word.ToList();
     }
 
+    public async Task<Word> GetFirstRecordAsync()
+    {
+      return ( await _context.Word.SingleAsync(x => x.Id == 1));
+    }
+
     public Word GetWordById(int id)
     {
       var word = _context.Word.FirstOrDefault(p => p.Id == id);
@@ -52,9 +58,6 @@ namespace Lingo.Data
       return (_context.SaveChanges() >= 0);
     }
 
-    public void UpdateWord(Word word)
-    {
-      // Nothing
-    }
+    public void UpdateWord(Word word) {}
   }
 }
