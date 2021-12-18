@@ -31,6 +31,11 @@ namespace Lingo.Data
       }
     }
 
+    public async Task AddAsync(Game game)
+    {
+      await _context.AddAsync(game);
+    }
+
     public bool SaveChanges()
     {
       return (_context.SaveChanges() >= 0);

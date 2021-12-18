@@ -7,6 +7,8 @@ namespace Lingo.Data
     bool SaveChanges();
 
     FinalWord GetFinalWordById(int id);
+
+    IEnumerable<FinalWord> GetAllFinalWords();
     Task<FinalWord> GetFirstRecordAsync();
   }
 }

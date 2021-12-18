@@ -1,5 +1,6 @@
 using Lingo.Data;
 using Lingo.Models;
+using Lingo.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,11 @@ builder.Services.AddScoped<IWordRepo, SqlWordRepo>();
 builder.Services.AddScoped<IGameRepo, SqlGameRepo>();
 
 builder.Services.AddScoped<IFinalWordRepo, SqlFinalWordRepo>();
+
+builder.Services.AddScoped<IFinalWordService, FinalWordService>();
+builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

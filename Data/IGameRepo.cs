@@ -9,6 +9,8 @@ namespace Lingo.Data
     Game GetGameById(int id);
 
     void UpdateGame(Game game);
+
+    Task AddAsync(Game game);
     void CreateGame(Game game);
   }
 }

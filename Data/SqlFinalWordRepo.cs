@@ -12,6 +12,11 @@ namespace Lingo.Data
         _context = context;
     }
 
+    public IEnumerable<FinalWord> GetAllFinalWords()
+    {
+      return _context.FinalWord.ToList();
+    }
+
     public FinalWord GetFinalWordById(int id)
     {
       var finalWord = _context.FinalWord.FirstOrDefault(p => p.Id == id);

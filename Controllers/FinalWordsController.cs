@@ -19,6 +19,15 @@ namespace Lingo.Controllers
       _mapper = mapper;
     }
 
+    // GET finalwords
+    [HttpGet]
+    public ActionResult <IEnumerable<WordReadDto>> GetAllFinalWords()
+    {
+      var finalWordItems = _repository.GetAllFinalWords();
+      return Ok(_mapper.Map<IEnumerable<WordReadDto>>(finalWordItems));
+    }
+
+
     // GET finalwords/{id}
     [HttpGet("{id}", Name="GetFinalWordById")]
     public ActionResult <FinalWordReadDto> GetFinalWordById(int id)
