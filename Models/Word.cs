@@ -8,16 +8,10 @@ namespace Lingo.Models
     [Key]
     public int Id { get; set; }
 
-    [RegularExpression(@"^.{6,}$", ErrorMessage = "Minimum 6 characters required")]
-    [Required(ErrorMessage = "Required")]
-    [StringLength(6, MinimumLength = 6, ErrorMessage = "Maximum 6 characters")]
-    public string? Name { get; set; }
+    [Required]
+    [StringLength(6, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 6)]
+    public string Name { get; set; } = "testen";
 
     public IList<GameWord>? GameWords { get; set; }
-
-    public static implicit operator DbSet<object>(Word v)
-    {
-      throw new NotImplementedException();
-    }
   }
 }

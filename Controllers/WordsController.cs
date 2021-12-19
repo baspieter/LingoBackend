@@ -47,6 +47,7 @@ namespace Lingo.Controllers
     public ActionResult <WordReadDto> CreateWord(WordCreateDto wordCreateDto)
     {
       var wordModel = _mapper.Map<Word>(wordCreateDto);
+
       _repository.CreateWord(wordModel);
       _repository.SaveChanges();
 
