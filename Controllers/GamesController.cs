@@ -40,7 +40,7 @@ namespace Lingo.Controllers
       var gameItem = _repository.GetGameById(id);
       if(gameItem != null)
       {
-      return Ok(_mapper.Map<GameReadDto>(gameItem));
+    return Ok(_mapper.Map<GameReadDto>(gameItem));
       }
 
       return NotFound();
@@ -48,7 +48,7 @@ namespace Lingo.Controllers
 
     // CREATE games
     [HttpPost]
-    public async Task<ActionResult<GameReadDto>> CreateGameAsync(GameCreateDto gameCreateDto)
+    public async Task<ActionResult<GameReadDto>> CreateGameAsync()
     {
 
       var game = await _gameService.StartNewGame();

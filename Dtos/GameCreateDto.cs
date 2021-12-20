@@ -17,8 +17,9 @@ namespace Lingo.Dtos
     public int GreenBalls { get; set; }
     [Required]
     public int RedBalls { get; set; }
-    [Required]
     public FinalWord? FinalWord { get; set; }
+    [Required]
+    public int FinalWordId { get; set; }
     public IList<GameWord>? GameWords { get; set; }
   }
 }

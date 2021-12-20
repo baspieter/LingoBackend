@@ -22,16 +22,34 @@ namespace Lingo.Services
         public async Task<Game> StartNewGame()
         {
             var word = await _wordService.SetWordAsync();
+            var finalWord = await _finalWordService.SetFinalWordAsync();
+            if (word == null || finalWord?.Name == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var finalWordProgress = setFinalWordProgress(finalWord);
             var game = new Game
             {
-                FinalWordProgress = new List<Char> { 'd', 's', 'a' },
-                FinalWord = await _finalWordService.SetFinalWordAsync(),
+                FinalWordProgress = finalWordProgress,
+                FinalWord = finalWord,
                 GameWords = new List<GameWord> { new GameWord { Word = word }}
             };
 
             await _gameRepo.AddAsync(game);
             await _unitOfWork.SaveChangesAsync();
             return game;
+        }
+
+        private List<char> setFinalWordProgress(FinalWord finalWord)
+        {
+            var list = new List<char> { };
+            for (int i = 0; i < finalWord.Name!.Length; i++)
+            {
+                list.Insert(i, ' ');
+            }
+
+            return list;
         }
     }
 }
