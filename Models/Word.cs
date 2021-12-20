@@ -10,7 +10,7 @@ namespace Lingo.Models
 
     [Required]
     [StringLength(6, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 6)]
-    public string Name { get; set; } = "testen";
+    public string? Name { get; set; }
 
     public IList<GameWord>? GameWords { get; set; }
   }

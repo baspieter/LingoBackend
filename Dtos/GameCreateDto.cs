@@ -7,21 +7,18 @@ namespace Lingo.Dtos
   {
     [Key]
     public int Id { get; set; }
-
-    [Required(ErrorMessage = "Required")]
+    [Required]
     public int Round { get; set; }
-
-    [Required(ErrorMessage = "Required")]
+    [Required]
     public Status Status { get; init; }
+    [Required]
     public List<char>? FinalWordProgress { get; set; }
-
-    [Required(ErrorMessage = "Required")]
+    [Required]
     public int GreenBalls { get; set; }
-
-    [Required(ErrorMessage = "Required")]
+    [Required]
     public int RedBalls { get; set; }
+    [Required]
     public FinalWord? FinalWord { get; set; }
     public IList<GameWord>? GameWords { get; set; }
-
   }
 }
