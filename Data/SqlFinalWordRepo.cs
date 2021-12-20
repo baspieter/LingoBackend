@@ -49,9 +49,9 @@ namespace Lingo.Data
       }
     }
 
-    public async Task<FinalWord> GetFirstRecordAsync()
+    public FinalWord SetRandomWord()
     {
-      return ( await _context.FinalWord.SingleAsync(x => x.Id == 1));
+      return _context.FinalWord.First(x => x.Id == 1);
     }
 
     public bool SaveChanges()

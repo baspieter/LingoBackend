@@ -14,11 +14,11 @@ namespace Lingo.Services
           _wordRepo = wordRepo;
       }
 
-    public async Task<Word> SetWordAsync()
+    public Word SetWord()
     {
-      var word = (await _wordRepo.GetFirstRecordAsync());
+      var words = _wordRepo.GetAllWords().OrderBy(c => Guid.NewGuid());
 
-      return word;
+      return words.First();
     }
   }
 }

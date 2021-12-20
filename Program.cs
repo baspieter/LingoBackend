@@ -52,7 +52,13 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 
     context.Word.Add(new Word() { Name = "Bussen", GameWords = new List<GameWord> {} });
-    context.Game.Add(new Game() { FinalWordProgress = new List<char> {'d','d'}, FinalWord = new FinalWord() { Name = "EenLangWoord" }, GameWords = new List<GameWord> {} });
+    context.Word.Add(new Word() { Name = "baalde", GameWords = new List<GameWord> {} });
+    context.Word.Add(new Word() { Name = "bagels", GameWords = new List<GameWord> {} });
+    context.Word.Add(new Word() { Name = "Babels", GameWords = new List<GameWord> {} });
+    context.Word.Add(new Word() { Name = "banier", GameWords = new List<GameWord> {} });
+    context.FinalWord.Add(new FinalWord() { Name = "Kerstmisfeest" });
+    context.FinalWord.Add(new FinalWord() { Name = "Proteineschudbeker" });
+    context.Game.Add(new Game() { FinalWordProgress = new List<char> {'d','d'}, FinalWord = new FinalWord() { Name = "Bibliotheekgebouw" } });
     context.SaveChanges();
 
     var word = context.Word.First();

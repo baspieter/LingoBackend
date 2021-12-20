@@ -14,9 +14,9 @@ namespace Lingo.Services
           _finalWordRepo = finalWordRepo;
       }
 
-    public async Task<FinalWord> SetFinalWordAsync()
+    public FinalWord SetFinalWord()
     {
-      var x = (await _finalWordRepo.GetFirstRecordAsync());
+      var x = _finalWordRepo.FindNewWord();
 
       return x;
     }

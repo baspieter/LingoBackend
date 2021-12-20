@@ -19,10 +19,10 @@ namespace Lingo.Services
             _wordService = wordService;
         }
 
-        public async Task<Game> StartNewGame()
+        public Task<Game> StartNewGame()
         {
-            var word = await _wordService.SetWordAsync();
-            var finalWord = await _finalWordService.SetFinalWordAsync();
+            var word = _wordService.SetWord();
+            var finalWord = _finalWordService.SetFinalWord();
             if (word == null || finalWord?.Name == null)
             {
                 throw new ArgumentNullException();

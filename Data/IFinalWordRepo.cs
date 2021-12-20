@@ -8,7 +8,7 @@ namespace Lingo.Data
     FinalWord GetFinalWordById(int id);
     void CreateFinalWord(FinalWord finalWord);
     IEnumerable<FinalWord> GetAllFinalWords();
-    Task<FinalWord> GetFirstRecordAsync();
+    FinalWord FindNewWord();
     void UpdateFinalWord(FinalWord finalWord);
     void DeleteFinalWord(FinalWord finalWord);
   }
