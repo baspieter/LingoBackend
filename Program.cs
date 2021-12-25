@@ -22,7 +22,6 @@ builder.Services.AddScoped<IFinalWordRepo, SqlFinalWordRepo>();
 
 builder.Services.AddScoped<IFinalWordService, FinalWordService>();
 builder.Services.AddScoped<IGameService, GameService>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IWordService, WordService>();
 
 

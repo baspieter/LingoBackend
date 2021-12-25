@@ -37,9 +37,9 @@ namespace Lingo.Data
       return _context.Word.ToList();
     }
 
-    public async Task<Word> GetFirstRecordAsync()
+    public Word GetFirstRecord()
     {
-      return ( await _context.Word.SingleAsync(x => x.Id == 1));
+      return ( _context.Word.Single(x => x.Id == 1));
     }
 
     public Word GetWordById(int id)

@@ -16,9 +16,9 @@ namespace Lingo.Services
 
     public FinalWord SetFinalWord()
     {
-      var x = _finalWordRepo.FindNewWord();
+      var x = _finalWordRepo.GetAllFinalWords().OrderBy(c => Guid.NewGuid());
 
-      return x;
+      return x.First();
     }
   }
 }

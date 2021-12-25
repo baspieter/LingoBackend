@@ -4,6 +4,6 @@ namespace Lingo.Services
 {
     public interface IGameService
     {
-        Task<Game> StartNewGame();
+        Game StartNewGame();
     }
 }

@@ -25,7 +25,7 @@ namespace Lingo.Data{
       return words;
     }
 
-    public Task<Word> GetFirstRecordAsync()
+    public Word GetFirstRecord()
     {
       throw new NotImplementedException();
     }

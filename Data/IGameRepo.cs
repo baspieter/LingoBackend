@@ -12,7 +12,7 @@ namespace Lingo.Data
 
     void UpdateGame(Game game);
 
-    Task AddAsync(Game game);
+    Game Add(Game game);
     void CreateGame(Game game);
   }
 }

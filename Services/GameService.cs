@@ -8,18 +8,16 @@ namespace Lingo.Services
     {
         private readonly IGameRepo _gameRepo;
         private readonly IFinalWordService _finalWordService;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IWordService _wordService;
 
-        public GameService(IGameRepo gameRepo, IFinalWordService finalWordService, IWordService wordService, IUnitOfWork unitOfWork)
+        public GameService(IGameRepo gameRepo, IFinalWordService finalWordService, IWordService wordService)
         {
             _gameRepo = gameRepo;
             _finalWordService = finalWordService;
-            _unitOfWork = unitOfWork;
             _wordService = wordService;
         }
 
-        public Task<Game> StartNewGame()
+        public Game StartNewGame()
         {
             var word = _wordService.SetWord();
             var finalWord = _finalWordService.SetFinalWord();
@@ -28,7 +26,7 @@ namespace Lingo.Services
                 throw new ArgumentNullException();
             }
 
-            var finalWordProgress = setFinalWordProgress(finalWord);
+            var finalWordProgress = SetFinalWordProgress(finalWord);
             var game = new Game
             {
                 FinalWordProgress = finalWordProgress,
@@ -36,15 +34,15 @@ namespace Lingo.Services
                 GameWords = new List<GameWord> { new GameWord { Word = word }}
             };
 
-            await _gameRepo.AddAsync(game);
-            await _unitOfWork.SaveChangesAsync();
+            _gameRepo.Add(game);
+            _gameRepo.SaveChanges();
             return game;
         }
 
-        private List<char> setFinalWordProgress(FinalWord finalWord)
+        private static List<char> SetFinalWordProgress(FinalWord finalWord)
         {
             var list = new List<char> { };
-            for (int i = 0; i < finalWord.Name!.Length; i++)
+            for (var i = 0; i < finalWord.Name!.Length; i++)
             {
                 list.Insert(i, ' ');
             }

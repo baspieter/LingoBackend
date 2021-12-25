@@ -36,7 +36,7 @@ namespace Lingo.Controllers
       var finalWordItem = _repository.GetFinalWordById(id);
       if(finalWordItem != null)
       {
-      return Ok(_mapper.Map<FinalWordReadDto>(finalWordItem));
+        return Ok(_mapper.Map<FinalWordReadDto>(finalWordItem));
       }
 
       return NotFound();

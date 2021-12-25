@@ -5,7 +5,6 @@ namespace Lingo.Dtos
 {
   public class GameReadDto
   {
-    public int Id { get; set;}
     public int Round { get; set; }
     public Status Status { get; init; }
     public List<char>? FinalWordProgress { get; set; }

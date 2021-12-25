@@ -9,7 +9,7 @@ namespace Lingo.Data
     Word GetWordById(int id);
     void CreateWord(Word word);
     void UpdateWord(Word word);
-    Task<Word> GetFirstRecordAsync();
+    Word GetFirstRecord();
     void DeleteWord(Word word);
   }
 }
