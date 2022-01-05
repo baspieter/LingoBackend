@@ -21,8 +21,12 @@ builder.Services.AddScoped<IGameRepo, SqlGameRepo>();
 builder.Services.AddScoped<IFinalWordRepo, SqlFinalWordRepo>();
 
 builder.Services.AddScoped<IFinalWordService, FinalWordService>();
+
 builder.Services.AddScoped<IGameService, GameService>();
+
 builder.Services.AddScoped<IWordService, WordService>();
+
+builder.Services.AddTransient<DataSeeder>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -49,29 +53,10 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<LingoContext>();
     context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
-
-    context.Word.Add(new Word() { Name = "Bussen", GameWords = new List<GameWord> {} });
-    context.Word.Add(new Word() { Name = "baalde", GameWords = new List<GameWord> {} });
-    context.Word.Add(new Word() { Name = "bagels", GameWords = new List<GameWord> {} });
-    context.Word.Add(new Word() { Name = "Babels", GameWords = new List<GameWord> {} });
-    context.Word.Add(new Word() { Name = "banier", GameWords = new List<GameWord> {} });
-    context.FinalWord.Add(new FinalWord() { Name = "Kerstmisfeest" });
-    context.FinalWord.Add(new FinalWord() { Name = "Proteineschudbeker" });
-    context.Game.Add(new Game() { FinalWordProgress = new List<char> {'d','d'}, FinalWord = new FinalWord() { Name = "Bibliotheekgebouw" } });
-    context.SaveChanges();
-
-    var word = context.Word.First();
-    var game = context.Game.First();
-    var finalWord = context.FinalWord.First();
-
-    if(word.GameWords != null) {
-        word.GameWords.Add(new GameWord()
-        {
-            Word = word,
-            Game = game
-        });
-    }
-    context.SaveChanges();
+    
+    var dataSeeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
+    dataSeeder.Seed();
 }
 
 app.Run();
+

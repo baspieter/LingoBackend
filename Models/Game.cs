@@ -19,7 +19,8 @@ namespace Lingo.Models
     public int GreenBalls { get; set; } = 2;
     [Required]
     public int RedBalls { get; set; } = 2;
-    public FinalWord? FinalWord { get; set; }
+
+    public FinalWord? FinalWord { get; set; } = null;
     [Required]
     public int FinalWordId { get; set; }
     public IList<GameWord>? GameWords { get; set; }

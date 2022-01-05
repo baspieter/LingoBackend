@@ -35,7 +35,7 @@ namespace Lingo.Controllers
       var wordItem = _repository.GetWordById(id);
       if(wordItem != null)
       {
-      return Ok(_mapper.Map<WordReadDto>(wordItem));
+        return Ok(_mapper.Map<WordReadDto>(wordItem));
       }
 
       return NotFound();

@@ -65,5 +65,11 @@ namespace Lingo.Controllers
 
       return NoContent();
     }
+    
+    // [HttpGet("[action]/{gameId:int}")]
+    // public WordResult CheckWord(int gameId, string word)
+    // {
+    //   return _gameService.CheckWord(gameId, word);
+    // }
   }
 }

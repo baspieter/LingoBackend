@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -65,7 +66,11 @@ namespace Lingo.Migrations
                 columns: table => new
                 {
                     word_id = table.Column<int>(type: "integer", nullable: false),
-                    game_id = table.Column<int>(type: "integer", nullable: false)
+                    game_id = table.Column<int>(type: "integer", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    word_progress = table.Column<List<string>>(type: "text[]", nullable: false),
+                    letter_progress = table.Column<int[]>(type: "integer[]", nullable: false),
+                    finished = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

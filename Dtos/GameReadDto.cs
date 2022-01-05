@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Lingo.Models;
 
 namespace Lingo.Dtos
