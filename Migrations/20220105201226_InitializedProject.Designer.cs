@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Lingo.Migrations
 {
     [DbContext(typeof(LingoContext))]
-    [Migration("20220105151050_InitializedProject")]
+    [Migration("20220105201226_InitializedProject")]
     partial class InitializedProject
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,6 +107,36 @@ namespace Lingo.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("id");
 
+                    b.HasKey("GameId", "WordId")
+                        .HasName("pk_game_word");
+
+                    b.HasIndex("WordId")
+                        .HasDatabaseName("ix_game_word_word_id");
+
+                    b.ToTable("game_word", (string)null);
+                });
+
+            modelBuilder.Entity("Lingo.Models.GameWordProgress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GameWordGameId")
+                        .HasColumnType("integer")
+                        .HasColumnName("game_word_game_id");
+
+                    b.Property<int>("GameWordId")
+                        .HasColumnType("integer")
+                        .HasColumnName("game_word_id");
+
+                    b.Property<int>("GameWordWordId")
+                        .HasColumnType("integer")
+                        .HasColumnName("game_word_word_id");
+
                     b.Property<int[]>("LetterProgress")
                         .IsRequired()
                         .HasColumnType("integer[]")
@@ -117,13 +147,13 @@ namespace Lingo.Migrations
                         .HasColumnType("text[]")
                         .HasColumnName("word_progress");
 
-                    b.HasKey("GameId", "WordId")
-                        .HasName("pk_game_word");
+                    b.HasKey("Id")
+                        .HasName("pk_game_word_progress");
 
-                    b.HasIndex("WordId")
-                        .HasDatabaseName("ix_game_word_word_id");
+                    b.HasIndex("GameWordGameId", "GameWordWordId")
+                        .HasDatabaseName("ix_game_word_progress_game_word_game_id_game_word_word_id");
 
-                    b.ToTable("game_word", (string)null);
+                    b.ToTable("game_word_progress", (string)null);
                 });
 
             modelBuilder.Entity("Lingo.Models.Word", b =>
@@ -178,6 +208,18 @@ namespace Lingo.Migrations
                     b.Navigation("Game");
 
                     b.Navigation("Word");
+                });
+
+            modelBuilder.Entity("Lingo.Models.GameWordProgress", b =>
+                {
+                    b.HasOne("Lingo.Models.GameWord", "GameWord")
+                        .WithMany()
+                        .HasForeignKey("GameWordGameId", "GameWordWordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_game_word_progress_game_word_game_word_game_id_game_word_wo");
+
+                    b.Navigation("GameWord");
                 });
 
             modelBuilder.Entity("Lingo.Models.FinalWord", b =>

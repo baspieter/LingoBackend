@@ -20,11 +20,15 @@ builder.Services.AddScoped<IGameRepo, SqlGameRepo>();
 
 builder.Services.AddScoped<IFinalWordRepo, SqlFinalWordRepo>();
 
+builder.Services.AddScoped<IGameWordRepo, SqlGameWordRepo>();
+
 builder.Services.AddScoped<IFinalWordService, FinalWordService>();
 
 builder.Services.AddScoped<IGameService, GameService>();
 
 builder.Services.AddScoped<IWordService, WordService>();
+
+builder.Services.AddScoped<IGameWordService, GameWordService>();
 
 builder.Services.AddTransient<DataSeeder>();
 
@@ -59,4 +63,3 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
-

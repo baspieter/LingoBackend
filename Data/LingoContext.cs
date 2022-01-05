@@ -15,15 +15,7 @@ namespace Lingo.Data
     public DbSet<Game> Game { get; set; }
     public DbSet<GameWord> GameWord { get; set; }
     public DbSet<FinalWord> FinalWord { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-      modelBuilder.Entity<GameWord>() 
-          .HasKey(x => new {x.GameId, x.WordId});
-
-      modelBuilder.Entity<FinalWord>()
-        .HasMany(c => c.Games)
-        .WithOne(e => e.FinalWord);
-    }
+    
+    public DbSet<GameWordProgress> GameWordProgress { get; set; }
   }
 }

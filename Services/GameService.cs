@@ -8,12 +8,14 @@ namespace Lingo.Services
         private readonly IGameRepo _gameRepo;
         private readonly IFinalWordService _finalWordService;
         private readonly IWordService _wordService;
+        private readonly IGameWordService _gameWordService;
 
-        public GameService(IGameRepo gameRepo, IFinalWordService finalWordService, IWordService wordService)
+        public GameService(IGameRepo gameRepo, IFinalWordService finalWordService, IWordService wordService, IGameWordService gameWordService)
         {
             _gameRepo = gameRepo;
             _finalWordService = finalWordService;
             _wordService = wordService;
+            _gameWordService = gameWordService;
         }
 
         public Game StartNewGame()
@@ -38,8 +40,10 @@ namespace Lingo.Services
 
         public GameWord CheckWord(int gameId, string word)
         {
-            var gameWord = CurrentGameWord(gameId);
-            
+            var game = FindGame(gameId);
+            var gameWord = FindGameWord(game);
+            var gameWordresult = _gameWordService.UpdateGameWord(gameWord, word);
+            return gameWordresult;
         }
 
         public Word? NewGameWord(int gameId)
@@ -60,9 +64,19 @@ namespace Lingo.Services
         //     return list;
         // }
 
-        private Game? FindGame(int gameId)
+        private Game FindGame(int gameId)
         {
             return _gameRepo.GetGameById(gameId);
+        }
+
+        private static GameWord FindGameWord(Game game)
+        {
+            if (game.GameWords == null)
+            {
+                throw new ArgumentNullException();
+            }
+            
+            return game.GameWords.Last(gameWord => gameWord.Finished == false);
         }
     }
 }

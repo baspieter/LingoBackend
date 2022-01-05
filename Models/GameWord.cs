@@ -3,11 +3,7 @@ using Lingo.Models;
 
 namespace Lingo.Models
 {
-    public enum LetterColor
-    {
-        Empty, Green, Red, Orange
-    }
-  public class GameWord
+    public class GameWord
   {
       [Key]
       public int Id { get; set; }
@@ -19,15 +15,6 @@ namespace Lingo.Models
       public int GameId { get; set; }
       
       public Game? Game { get; set; }
-
-      [Required]
-      public List<string> WordProgress { get; set; } = new();
-      
-      [Required]
-      public List<LetterColor> LetterProgress { get; init; } = new()
-      { 
-          LetterColor.Empty, LetterColor.Empty, LetterColor.Empty, LetterColor.Empty, LetterColor.Empty, LetterColor.Empty
-      };
       
       public bool Finished { get; set; } = false;
   }

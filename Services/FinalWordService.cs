@@ -4,7 +4,7 @@ using Lingo.Models;
 namespace Lingo.Services
 {
     public class FinalWordService : IFinalWordService
-    {
+    { 
       private readonly IFinalWordRepo _finalWordRepo;
 
       public FinalWordService(IFinalWordRepo finalWordRepo)
