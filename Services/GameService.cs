@@ -1,9 +1,5 @@
-using AutoMapper;
 using Lingo.Data;
-using Lingo.Dtos;
 using Lingo.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Lingo.Services
 {
@@ -40,11 +36,10 @@ namespace Lingo.Services
             return game;
         }
 
-        public Word? CurrentGameWord(int gameId)
+        public GameWord CheckWord(int gameId, string word)
         {
-            var game = FindGame(gameId);
-            var lastGameWord = game?.GameWords?.Last();
-            return lastGameWord?.Word;
+            var gameWord = CurrentGameWord(gameId);
+            
         }
 
         public Word? NewGameWord(int gameId)

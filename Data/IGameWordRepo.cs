@@ -6,5 +6,6 @@ namespace Lingo.Data
   {
     bool SaveChanges();
     void CreateGameWord(GameWord gameWord);
+    GameWord GetGameWordById(int id);
   }
 }

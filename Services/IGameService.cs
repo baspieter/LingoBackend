@@ -5,8 +5,7 @@ namespace Lingo.Services
     public interface IGameService
     {
         Game StartNewGame();
-        Word? CurrentGameWord(int gameId);
-
+        GameWord CheckWord(int gameId, string word);
         Word? NewGameWord(int gameId);
     }
 }

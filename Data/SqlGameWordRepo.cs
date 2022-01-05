@@ -24,5 +24,16 @@ namespace Lingo.Data
     {
       return (_context.SaveChanges() >= 0);
     }
+    
+    public GameWord GetGameWordById(int id)
+    {
+      var gameWord = _context.GameWord.FirstOrDefault(p => p.Id == id);
+      if(gameWord != null)
+      {
+        return gameWord;
+      } else {
+        throw new ArgumentNullException(nameof(gameWord));
+      }
+    }
   }
 }
