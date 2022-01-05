@@ -1,7 +1,5 @@
 using Lingo.Data;
 using Lingo.Models;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Lingo.Services
 {

@@ -1,5 +1,6 @@
 using Lingo.Data;
 using Lingo.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lingo.Services
@@ -21,7 +22,7 @@ namespace Lingo.Services
         {
             var word = _wordService.SetWord();
             var finalWord = _finalWordService.SetFinalWord();
-            if (word == null || finalWord?.Name == null)
+            if (word == null || finalWord == null)
             {
                 throw new ArgumentNullException();
             }
@@ -39,6 +40,20 @@ namespace Lingo.Services
             return game;
         }
 
+        public Word? CurrentGameWord(int gameId)
+        {
+            var game = FindGame(gameId);
+            var lastGameWord = game?.GameWords?.Last();
+            return lastGameWord?.Word;
+        }
+
+        public Word? NewGameWord(int gameId)
+        {
+            var gameWords = FindGame(gameId)?.GameWords;
+            var usedWordIds = gameWords?.Select(gameWord => gameWord.WordId).ToArray();
+            return usedWordIds == null ? throw new ArgumentNullException() : _wordService.SetGameWord(usedWordIds);
+        }
+
         private static List<char> SetFinalWordProgress(FinalWord finalWord)
         {
             var list = new List<char> { };
@@ -48,6 +63,11 @@ namespace Lingo.Services
             }
 
             return list;
+        }
+
+        private Game? FindGame(int gameId)
+        {
+            return _gameRepo.GetGameById(gameId);
         }
     }
 }
