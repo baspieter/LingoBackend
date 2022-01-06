@@ -7,6 +7,7 @@ namespace Lingo.Models
   }
   public class Game
   {
+
     [Key]
     public int Id { get; set; }
     
@@ -27,6 +28,6 @@ namespace Lingo.Models
     public FinalWord? FinalWord { get; set; } = null;
     [Required]
     public int FinalWordId { get; set; }
-    public IList<GameWord>? GameWords { get; set; }
+    public ICollection<GameWord>? GameWords { get; set; }
   }
 }

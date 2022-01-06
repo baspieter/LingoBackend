@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -65,14 +64,17 @@ namespace Lingo.Migrations
                 name: "game_word",
                 columns: table => new
                 {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     word_id = table.Column<int>(type: "integer", nullable: false),
                     game_id = table.Column<int>(type: "integer", nullable: false),
-                    id = table.Column<int>(type: "integer", nullable: false),
+                    word_progress = table.Column<List<string>>(type: "text[]", nullable: false),
+                    word_letter_progress = table.Column<List<int>>(type: "integer[]", nullable: false),
                     finished = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_game_word", x => new { x.game_id, x.word_id });
+                    table.PrimaryKey("pk_game_word", x => x.id);
                     table.ForeignKey(
                         name: "fk_game_word_game_game_id",
                         column: x => x.game_id,
@@ -87,50 +89,24 @@ namespace Lingo.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "game_word_progress",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    game_word_id = table.Column<int>(type: "integer", nullable: false),
-                    game_word_game_id = table.Column<int>(type: "integer", nullable: false),
-                    game_word_word_id = table.Column<int>(type: "integer", nullable: false),
-                    word_progress = table.Column<List<string>>(type: "text[]", nullable: false),
-                    letter_progress = table.Column<int[]>(type: "integer[]", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_game_word_progress", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_game_word_progress_game_word_game_word_game_id_game_word_wo",
-                        columns: x => new { x.game_word_game_id, x.game_word_word_id },
-                        principalTable: "game_word",
-                        principalColumns: new[] { "game_id", "word_id" },
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "ix_game_final_word_id",
                 table: "game",
                 column: "final_word_id");
 
             migrationBuilder.CreateIndex(
+                name: "ix_game_word_game_id",
+                table: "game_word",
+                column: "game_id");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_game_word_word_id",
                 table: "game_word",
                 column: "word_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_game_word_progress_game_word_game_id_game_word_word_id",
-                table: "game_word_progress",
-                columns: new[] { "game_word_game_id", "game_word_word_id" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "game_word_progress");
-
             migrationBuilder.DropTable(
                 name: "game_word");
 

@@ -20,6 +20,7 @@ namespace Lingo.Data
 
       _context.GameWord.Add(gameWord);
     }
+
     public bool SaveChanges()
     {
       return (_context.SaveChanges() >= 0);

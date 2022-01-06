@@ -66,9 +66,10 @@ namespace Lingo.Controllers
       return NoContent();
     }
     
-    [HttpGet("[action]/{gameId:int}")]
+    [HttpGet("[action]/{gameId:int}/{word}")]
     public GameWord Submitword(int gameId, string word)
     {
+      var test = word;
       return _gameService.CheckWord(gameId, word);
     }
   }

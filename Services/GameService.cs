@@ -6,13 +6,15 @@ namespace Lingo.Services
     public class GameService : IGameService
     {
         private readonly IGameRepo _gameRepo;
+        private readonly IGameWordRepo _gameWordRepo;
         private readonly IFinalWordService _finalWordService;
         private readonly IWordService _wordService;
         private readonly IGameWordService _gameWordService;
 
-        public GameService(IGameRepo gameRepo, IFinalWordService finalWordService, IWordService wordService, IGameWordService gameWordService)
+        public GameService(IGameRepo gameRepo, IGameWordRepo gameWordRepo, IFinalWordService finalWordService, IWordService wordService, IGameWordService gameWordService)
         {
             _gameRepo = gameRepo;
+            _gameWordRepo = gameWordRepo;
             _finalWordService = finalWordService;
             _wordService = wordService;
             _gameWordService = gameWordService;
@@ -26,15 +28,17 @@ namespace Lingo.Services
             {
                 throw new ArgumentNullException();
             }
-            
+
             var game = new Game
             {
-                FinalWord = finalWord,
-                GameWords = new List<GameWord> { new GameWord() { Word = word }}
+                FinalWord = finalWord
             };
-
+            game.GameWords?.Add(new GameWord { Word = word});
             _gameRepo.Add(game);
             _gameRepo.SaveChanges();
+            _gameWordRepo.SaveChanges();
+            
+            
             return game;
         }
 
@@ -52,17 +56,6 @@ namespace Lingo.Services
             var usedWordIds = gameWords?.Select(gameWord => gameWord.WordId).ToArray();
             return usedWordIds == null ? throw new ArgumentNullException() : _wordService.SetGameWord(usedWordIds);
         }
-
-        // private static List<char> SetFinalWordProgress(FinalWord finalWord)
-        // {
-        //     var list = new List<char> { };
-        //     for (var i = 0; i < finalWord.Name!.Length; i++)
-        //     {
-        //         list.Insert(i, ' ');
-        //     }
-        //
-        //     return list;
-        // }
 
         private Game FindGame(int gameId)
         {
