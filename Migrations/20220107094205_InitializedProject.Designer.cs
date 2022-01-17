@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Lingo.Migrations
 {
     [DbContext(typeof(LingoContext))]
-    [Migration("20220106145125_InitializedProject")]
+    [Migration("20220107094205_InitializedProject")]
     partial class InitializedProject
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

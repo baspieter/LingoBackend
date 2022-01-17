@@ -6,6 +6,8 @@ namespace Lingo.Data
   {
     bool SaveChanges();
     void CreateGameWord(GameWord gameWord);
+
+    IQueryable<GameWord> GetGameWordsByGame(Game game);
     GameWord GetGameWordById(int id);
   }
 }

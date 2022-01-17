@@ -36,5 +36,10 @@ namespace Lingo.Data
         throw new ArgumentNullException(nameof(gameWord));
       }
     }
+
+    public IQueryable<GameWord> GetGameWordsByGame(Game game)
+    {
+      return _context.GameWord.Where(p => p.Game == game).Include(a => a.Word);
+    }
   }
 }

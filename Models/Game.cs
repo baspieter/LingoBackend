@@ -25,9 +25,8 @@ namespace Lingo.Models
     
     [Required]
     public int RedBalls { get; set; } = 2;
-    public FinalWord? FinalWord { get; set; } = null;
+    public FinalWord FinalWord { get; set; }
     [Required]
-    public int FinalWordId { get; set; }
-    public ICollection<GameWord>? GameWords { get; set; }
+    public ICollection<GameWord> GameWords { get; set; }
   }
 }

@@ -18,8 +18,7 @@ namespace Lingo.Models
       public int Id { get; set; }
       
       [Required]
-      public int WordId { get; set; }
-      public Word? Word { get; set; }
+      public Word Word { get; set; }
       [Required]
       public Game Game { get; set; }
       public List<string> WordProgress { get; set; } = new();

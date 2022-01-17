@@ -1,5 +1,6 @@
 using Lingo.Data;
 using Lingo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingo.Services
 {
@@ -33,9 +34,16 @@ namespace Lingo.Services
             {
                 FinalWord = finalWord
             };
-            game.GameWords?.Add(new GameWord { Word = word});
+
+            var gameWord = new GameWord
+            {
+                Game = game,
+                Word = word
+            };
+
             _gameRepo.Add(game);
             _gameRepo.SaveChanges();
+            _gameWordRepo.CreateGameWord(gameWord);
             _gameWordRepo.SaveChanges();
             
             
@@ -53,7 +61,7 @@ namespace Lingo.Services
         public Word? NewGameWord(int gameId)
         {
             var gameWords = FindGame(gameId)?.GameWords;
-            var usedWordIds = gameWords?.Select(gameWord => gameWord.WordId).ToArray();
+            var usedWordIds = gameWords?.Select(gameWord => gameWord.Word.Id).ToArray();
             return usedWordIds == null ? throw new ArgumentNullException() : _wordService.SetGameWord(usedWordIds);
         }
 
@@ -62,14 +70,10 @@ namespace Lingo.Services
             return _gameRepo.GetGameById(gameId);
         }
 
-        private static GameWord FindGameWord(Game game)
+        private GameWord FindGameWord(Game game)
         {
-            if (game.GameWords == null)
-            {
-                throw new ArgumentNullException();
-            }
-            
-            return game.GameWords.Last(gameWord => gameWord.Finished == false);
+            var gameWords = _gameWordRepo.GetGameWordsByGame(game);
+            return gameWords.Include(a => a.Word).OrderBy(p => p.Finished == Equals(true)).Last();
         }
     }
 }

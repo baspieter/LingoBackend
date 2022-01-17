@@ -25,6 +25,22 @@ namespace Lingo.Data
         modelBuilder.Entity<Game>()
             .HasMany(c => c.GameWords)
             .WithOne(e => e.Game);
+
+        modelBuilder.Entity<Game>()
+            .HasOne(c => c.FinalWord)
+            .WithMany(e => e.Games);
+        
+        modelBuilder.Entity<Word>()
+            .HasMany(c => c.GameWords)
+            .WithOne(e => e.Word);
+
+        modelBuilder.Entity<GameWord>()
+            .HasOne(c => c.Game)
+            .WithMany(e => e.GameWords);
+        
+        modelBuilder.Entity<GameWord>()
+            .HasOne(c => c.Word)
+            .WithMany(e => e.GameWords);
     }
   }
 }
