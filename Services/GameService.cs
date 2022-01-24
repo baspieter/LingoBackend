@@ -58,6 +58,18 @@ namespace Lingo.Services
             return gameWordresult;
         }
 
+        public bool CheckFinalWord(int gameId, string finalWord)
+        {
+            var game = FindGame(gameId);
+            var originalFinalWord = game.FinalWord.Name;
+            if (originalFinalWord == null) throw new ArgumentNullException();
+            
+            var result = originalFinalWord.Equals(finalWord);
+            
+            if (result) FinishGame(game);
+            return result;
+        }
+
         public Word? NewGameWord(int gameId)
         {
             var gameWords = FindGame(gameId)?.GameWords;
@@ -73,7 +85,14 @@ namespace Lingo.Services
         private GameWord FindGameWord(Game game)
         {
             var gameWords = _gameWordRepo.GetGameWordsByGame(game);
-            return gameWords.Include(a => a.Word).OrderBy(p => p.Finished == Equals(true)).Last();
+            var currentGameWord = gameWords.Include(a => a.Word).OrderBy(p => p.Finished == true).Last();
+            return currentGameWord;
+        }
+
+        private void FinishGame(Game game)
+        {
+            game.Status = Status.Finished;
+            _gameRepo.SaveChanges();
         }
     }
 }

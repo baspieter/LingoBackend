@@ -1,4 +1,5 @@
 using Lingo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingo.Data
 {

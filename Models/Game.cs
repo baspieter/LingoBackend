@@ -15,7 +15,7 @@ namespace Lingo.Models
     public int Round { get; set; } = 0;
     
     [Required]
-    public Status Status { get; init; } = Status.Active;
+    public Status Status { get; set; } = Status.Active;
 
     [Required]
     public List<char>? FinalWordProgress { get; set; } = new();

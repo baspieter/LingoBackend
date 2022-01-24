@@ -7,5 +7,7 @@ namespace Lingo.Services
         Game StartNewGame();
         GameWord CheckWord(int gameId, string word);
         Word? NewGameWord(int gameId);
+
+        bool CheckFinalWord(int gameId, string finalWord);
     }
 }

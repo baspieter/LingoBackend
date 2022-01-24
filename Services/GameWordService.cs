@@ -15,14 +15,13 @@ namespace Lingo.Services
         public GameWord UpdateGameWord(GameWord gameWord, string word)
         {
             var originalWord = gameWord.Word.Name;
-            if (originalWord == word) gameWord.Finished = true;
+            if (originalWord == null) throw new ArgumentNullException();
             gameWord.WordProgress.Add(word);
-
-
-            // var OriginalWordChars = originalWord.ToCharArray();
-            var OriginalWordChars = originalWord.ToList();
-            var SubmittedWordChars = word.ToList();
-            var letterProgress = this.letterProgress(OriginalWordChars, SubmittedWordChars);
+            // if (originalWord == word) gameWord.Finished = true;
+            
+            var originalWordChars = originalWord.ToList();
+            var submittedWordChars = word.ToList();
+            var letterProgress = this.letterProgress(originalWordChars, submittedWordChars);
 
             gameWord.WordLetterProgress.Add(Convert.ToInt32(letterProgress));
             

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Lingo.Data;
 using Lingo.Models;
 using Lingo.Services;
@@ -31,6 +32,9 @@ builder.Services.AddScoped<IWordService, WordService>();
 builder.Services.AddScoped<IGameWordService, GameWordService>();
 
 builder.Services.AddTransient<DataSeeder>();
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
