@@ -1,3 +1,4 @@
+using Lingo.Dtos;
 using Lingo.Models;
 
 namespace Lingo.Services
@@ -9,5 +10,7 @@ namespace Lingo.Services
         Word? NewGameWord(int gameId);
 
         bool CheckFinalWord(int gameId, string finalWord);
+
+        Dictionary<string, object> getGameData(int gameId);
     }
 }

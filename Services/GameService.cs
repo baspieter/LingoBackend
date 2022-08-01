@@ -1,6 +1,17 @@
+using System.Text.Json;
+using AutoMapper;
 using Lingo.Data;
+using Lingo.Dtos;
+
 using Lingo.Models;
 using Microsoft.EntityFrameworkCore;
+
+using AutoMapper;
+using Lingo.Data;
+using Lingo.Dtos;
+using Lingo.Models;
+using Lingo.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Lingo.Services
 {
@@ -11,14 +22,18 @@ namespace Lingo.Services
         private readonly IFinalWordService _finalWordService;
         private readonly IWordService _wordService;
         private readonly IGameWordService _gameWordService;
+        private readonly IWordRepo _wordRepo;
+        public IMapper _mapper { get; }
 
-        public GameService(IGameRepo gameRepo, IGameWordRepo gameWordRepo, IFinalWordService finalWordService, IWordService wordService, IGameWordService gameWordService)
+        public GameService(IGameRepo gameRepo, IGameWordRepo gameWordRepo, IFinalWordService finalWordService, IWordService wordService, IGameWordService gameWordService, IWordRepo wordRepo, IMapper mapper)
         {
             _gameRepo = gameRepo;
             _gameWordRepo = gameWordRepo;
+            _wordRepo = wordRepo;
             _finalWordService = finalWordService;
             _wordService = wordService;
             _gameWordService = gameWordService;
+            _mapper = mapper;
         }
 
         public Game StartNewGame()
@@ -48,6 +63,27 @@ namespace Lingo.Services
             
             
             return game;
+        }
+
+        public Dictionary<string, object> getGameData(int gameId)
+        {
+            var gameDictionary = new Dictionary<string, object>();
+            var game = FindGame(gameId);
+            var gameDto = _mapper.Map<GameReadDto>(game);
+            gameDictionary.Add("Game", gameDto);
+
+            var word = FindGameWord(game)?.Word;
+            if (word != null)
+            {
+                var wordDto = _mapper.Map<WordReadDto>(word);
+                gameDictionary.Add("Word", wordDto);
+            }
+
+            var finalWord = _finalWordService.SetFinalWord();
+            var finalWordDto = _mapper.Map<FinalWordReadDto>(game.FinalWord);
+            gameDictionary.Add("Finalword", finalWordDto);
+
+            return gameDictionary;
         }
 
         public GameWord CheckWord(int gameId, string word)

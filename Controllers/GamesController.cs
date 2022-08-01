@@ -33,11 +33,9 @@ namespace Lingo.Controllers
 
     // GET games/{id}
     [HttpGet("{id}", Name="GetGameById")]
-    public ActionResult <GameReadDto> GetGameById(int id)
+    public Dictionary<string, object> GetGameById(int id)
     {
-      var gameItem = _repository.GetGameById(id);
-
-      return Ok(_mapper.Map<GameReadDto>(gameItem));
+      return _gameService.getGameData(id);
     }
 
     // CREATE games
