@@ -11,6 +11,6 @@ namespace Lingo.Services
 
         bool CheckFinalWord(int gameId, string finalWord);
 
-        Dictionary<string, object> getGameData(int gameId);
+        Dictionary<string, object> GetGameData(int gameId);
     }
 }

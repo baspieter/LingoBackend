@@ -35,18 +35,18 @@ namespace Lingo.Controllers
     [HttpGet("{id}", Name="GetGameById")]
     public Dictionary<string, object> GetGameById(int id)
     {
-      return _gameService.getGameData(id);
+      return _gameService.GetGameData(id);
     }
 
     // CREATE games
     [HttpPost]
-    public GameReadDto CreateGame()
+    public Dictionary<string, object> CreateGame()
     {
 
       var game = _gameService.StartNewGame();
       _repository.SaveChanges();
 
-      return _mapper.Map<GameReadDto>(game);
+      return _gameService.GetGameData(game.Id);
     }
 
     // EDIT games/{id}

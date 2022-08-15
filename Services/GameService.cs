@@ -40,6 +40,7 @@ namespace Lingo.Services
         {
             var word = _wordService.SetWord();
             var finalWord = _finalWordService.SetFinalWord();
+            List<char> finalWordProgress = updateFinalWordProgress(finalWord.Name, new string("kerztmizfeesd"));
             if (word == null || finalWord == null)
             {
                 throw new ArgumentNullException();
@@ -47,7 +48,8 @@ namespace Lingo.Services
 
             var game = new Game
             {
-                FinalWord = finalWord
+                FinalWord = finalWord,
+                FinalWordProgress = finalWordProgress
             };
 
             var gameWord = new GameWord
@@ -61,11 +63,10 @@ namespace Lingo.Services
             _gameWordRepo.CreateGameWord(gameWord);
             _gameWordRepo.SaveChanges();
             
-            
             return game;
         }
 
-        public Dictionary<string, object> getGameData(int gameId)
+        public Dictionary<string, object> GetGameData(int gameId)
         {
             var gameDictionary = new Dictionary<string, object>();
             var game = FindGame(gameId);
@@ -129,6 +130,31 @@ namespace Lingo.Services
         {
             game.Status = Status.Finished;
             _gameRepo.SaveChanges();
+        }
+
+        private List<char> updateFinalWordProgress(String finalWord, String guessedWord)
+        {
+            var guessedWordChars = new List<char>(guessedWord);
+            if (guessedWord == finalWord)
+            {
+                return guessedWordChars;
+            }
+ 
+            var finalWordChars = new List<char>(finalWord);
+            var newFinalWordProgress = new List<char>();
+            for(var i = 0; i < finalWordChars.Count; i++)
+            {
+                if (guessedWordChars.Count != finalWordChars.Count || !guessedWordChars.Any() || finalWordChars[i] != guessedWordChars[i])
+                {
+                    newFinalWordProgress.Add('.');
+                }
+                else
+                {
+                    newFinalWordProgress.Add(finalWordChars[i]);
+                }
+            }
+
+            return newFinalWordProgress;
         }
     }
 }
