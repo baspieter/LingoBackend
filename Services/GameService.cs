@@ -40,7 +40,7 @@ namespace Lingo.Services
         {
             var word = _wordService.SetWord();
             var finalWord = _finalWordService.SetFinalWord();
-            List<char> finalWordProgress = updateFinalWordProgress(finalWord.Name, new string("kerztmizfeesd"));
+            String finalWordProgress = updateFinalWordProgress(finalWord.Name, new string(""));
             if (word == null || finalWord == null)
             {
                 throw new ArgumentNullException();
@@ -95,16 +95,17 @@ namespace Lingo.Services
             return gameWordresult;
         }
 
-        public bool CheckFinalWord(int gameId, string finalWord)
+        public Dictionary<string, object> CheckFinalWord(int gameId, string finalWord)
         {
             var game = FindGame(gameId);
-            var originalFinalWord = game.FinalWord.Name;
-            if (originalFinalWord == null) throw new ArgumentNullException();
+            // var originalFinalWord = game.FinalWord;
+            // if (originalFinalWord == null) throw new ArgumentNullException();
+            //
+            // var updatedFinalWordProgress = updateFinalWordProgress(originalFinalWord.Name, finalWord);
+            //
+            var word = finalWord;
             
-            var result = originalFinalWord.Equals(finalWord);
-            
-            if (result) FinishGame(game);
-            return result;
+            return GetGameData(gameId);
         }
 
         public Word? NewGameWord(int gameId)
@@ -132,19 +133,19 @@ namespace Lingo.Services
             _gameRepo.SaveChanges();
         }
 
-        private List<char> updateFinalWordProgress(String finalWord, String guessedWord)
+        private String updateFinalWordProgress(String finalWord, String guessedWord)
         {
             var guessedWordChars = new List<char>(guessedWord);
             if (guessedWord == finalWord)
             {
-                return guessedWordChars;
+                return new string(guessedWordChars.ToArray());
             }
  
             var finalWordChars = new List<char>(finalWord);
             var newFinalWordProgress = new List<char>();
             for(var i = 0; i < finalWordChars.Count; i++)
             {
-                if (guessedWordChars.Count != finalWordChars.Count || !guessedWordChars.Any() || finalWordChars[i] != guessedWordChars[i])
+                if (guessedWordChars.Count != finalWordChars.Count || finalWordChars[i] != guessedWordChars[i])
                 {
                     newFinalWordProgress.Add('.');
                 }
@@ -153,8 +154,7 @@ namespace Lingo.Services
                     newFinalWordProgress.Add(finalWordChars[i]);
                 }
             }
-
-            return newFinalWordProgress;
+            return new string(newFinalWordProgress.ToArray());
         }
     }
 }

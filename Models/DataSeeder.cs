@@ -20,11 +20,11 @@ namespace Lingo.Models
             CreateWords();
             CreateFinalWords();
             _context.SaveChanges();
-            CreateGame();
-            _context.SaveChanges();
 
-            var game = _context.Game.First();
-            var gamewords = game.GameWords;
+            // CreateGame();
+            // _context.SaveChanges();
+            // var game = _context.Game.First();
+            // var gamewords = game.GameWords;
         }
 
         private void CreateWords()
@@ -65,21 +65,22 @@ namespace Lingo.Models
             _context.FinalWord.AddRange(finalWords);
         }
 
-        private void CreateGame()
-        {
-            var game = new Game()
-            {
-                FinalWord = _context.FinalWord.First()
-            };
-
-            var gameWord = new GameWord()
-            {
-                Game = game,
-                Word = _context.Word.First()
-            };
-            
-            _context.Game.AddRange(game);
-            _context.GameWord.Add(gameWord);
-        }
+        // private void CreateGame()
+        // {
+        //     var game = new Game()
+        //     {
+        //         FinalWord = _context.FinalWord.First(),
+        //         FinalWordProgress = new String("")
+        //     };
+        //
+        //     var gameWord = new GameWord()
+        //     {
+        //         Game = game,
+        //         Word = _context.Word.First()
+        //     };
+        //     
+        //     _context.Game.AddRange(game);
+        //     _context.GameWord.Add(gameWord);
+        // }
     }
 }

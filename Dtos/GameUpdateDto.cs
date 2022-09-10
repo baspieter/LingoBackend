@@ -10,7 +10,7 @@ namespace Lingo.Dtos
     [Required]
     public Status Status { get; init; }
     [Required]
-    public List<char>? FinalWordProgress { get; set; }
+    public String FinalWordProgress { get; set; }
     [Required]
     public int GreenBalls { get; set; }
     [Required]

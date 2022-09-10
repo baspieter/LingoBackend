@@ -73,7 +73,7 @@ namespace Lingo.Controllers
     
     // SUBMIT FINAL WORD
     [HttpGet("[action]/{gameId:int}/{finalWord}")]
-    public bool SubmitFinalword(int gameId, string finalWord)
+    public Dictionary<string, object> SubmitFinalword(int gameId, string finalWord)
     {
       return _gameService.CheckFinalWord(gameId, finalWord);
     }

@@ -18,7 +18,7 @@ namespace Lingo.Models
     public Status Status { get; set; } = Status.Active;
 
     [Required]
-    public List<char>? FinalWordProgress { get; set; } = new();
+    public String FinalWordProgress { get; set; } = "";
     
     [Required]
     public int GreenBalls { get; set; } = 2;

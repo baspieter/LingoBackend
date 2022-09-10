@@ -9,7 +9,7 @@ namespace Lingo.Services
         GameWord CheckWord(int gameId, string word);
         Word? NewGameWord(int gameId);
 
-        bool CheckFinalWord(int gameId, string finalWord);
+        Dictionary<string, object> CheckFinalWord(int gameId, string finalWord);
 
         Dictionary<string, object> GetGameData(int gameId);
     }
