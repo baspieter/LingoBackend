@@ -6,6 +6,8 @@ namespace Lingo.Data
   {
     bool SaveChanges();
     FinalWord GetFinalWordById(int id);
+
+    // FinalWord GetFinalWordByGameId(int gameId);
     void CreateFinalWord(FinalWord finalWord);
     IEnumerable<FinalWord> GetAllFinalWords();
     void UpdateFinalWord(FinalWord finalWord);

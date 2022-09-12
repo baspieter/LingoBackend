@@ -22,18 +22,18 @@ namespace Lingo.Services
         private readonly IFinalWordService _finalWordService;
         private readonly IWordService _wordService;
         private readonly IGameWordService _gameWordService;
-        private readonly IWordRepo _wordRepo;
+        private readonly LingoContext _context;
         public IMapper _mapper { get; }
 
-        public GameService(IGameRepo gameRepo, IGameWordRepo gameWordRepo, IFinalWordService finalWordService, IWordService wordService, IGameWordService gameWordService, IWordRepo wordRepo, IMapper mapper)
+        public GameService(IGameRepo gameRepo, IGameWordRepo gameWordRepo, IFinalWordService finalWordService, IWordService wordService, IGameWordService gameWordService, IMapper mapper, LingoContext context)
         {
             _gameRepo = gameRepo;
             _gameWordRepo = gameWordRepo;
-            _wordRepo = wordRepo;
             _finalWordService = finalWordService;
             _wordService = wordService;
             _gameWordService = gameWordService;
             _mapper = mapper;
+            _context = context;
         }
 
         public Game StartNewGame()
@@ -79,8 +79,7 @@ namespace Lingo.Services
                 var wordDto = _mapper.Map<WordReadDto>(word);
                 gameDictionary.Add("Word", wordDto);
             }
-
-            var finalWord = _finalWordService.SetFinalWord();
+            
             var finalWordDto = _mapper.Map<FinalWordReadDto>(game.FinalWord);
             gameDictionary.Add("Finalword", finalWordDto);
 
@@ -95,16 +94,17 @@ namespace Lingo.Services
             return gameWordresult;
         }
 
-        public Dictionary<string, object> CheckFinalWord(int gameId, string finalWord)
+        public Dictionary<string, object> CheckFinalWord(int gameId, string finalWordGuess)
         {
-            var game = FindGame(gameId);
-            // var originalFinalWord = game.FinalWord;
-            // if (originalFinalWord == null) throw new ArgumentNullException();
-            //
-            // var updatedFinalWordProgress = updateFinalWordProgress(originalFinalWord.Name, finalWord);
-            //
-            var word = finalWord;
-            
+            var game = _context.Game.Where(game => game.Id == gameId).Include(game => game.FinalWord).FirstOrDefault();
+            var originalFinalWord = game.FinalWord.Name;
+            if (originalFinalWord == null) throw new ArgumentNullException();
+
+            if (originalFinalWord == finalWordGuess)
+            {
+                FinishGame(game);
+            }
+
             return GetGameData(gameId);
         }
 
@@ -130,6 +130,7 @@ namespace Lingo.Services
         private void FinishGame(Game game)
         {
             game.Status = Status.Finished;
+            game.FinalWordProgress = game.FinalWord.Name;
             _gameRepo.SaveChanges();
         }
 
@@ -140,7 +141,7 @@ namespace Lingo.Services
             {
                 return new string(guessedWordChars.ToArray());
             }
- 
+        
             var finalWordChars = new List<char>(finalWord);
             var newFinalWordProgress = new List<char>();
             for(var i = 0; i < finalWordChars.Count; i++)

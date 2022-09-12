@@ -72,10 +72,11 @@ namespace Lingo.Controllers
     }
     
     // SUBMIT FINAL WORD
-    [HttpGet("[action]/{gameId:int}/{finalWord}")]
-    public Dictionary<string, object> SubmitFinalword(int gameId, string finalWord)
+    [Route("{gameId:int}/submitFinalWord/{finalWordGuess}")]
+    [HttpGet]
+    public Dictionary<string, object> SubmitFinalword(int gameId, string finalWordGuess)
     {
-      return _gameService.CheckFinalWord(gameId, finalWord);
+      return _gameService.CheckFinalWord(gameId, finalWordGuess);
     }
   }
 }
