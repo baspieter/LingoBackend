@@ -9,5 +9,9 @@ namespace Lingo.Data
 
     IQueryable<GameWord> GetGameWordsByGame(Game game);
     GameWord GetGameWordById(int id);
+
+    void AddSubmittedWord(GameWord gameWord, String submittedWord);
+    bool FinishedGameWord(GameWord gameWord);
+    void FinishGameWord(GameWord gameWord);
   }
 }

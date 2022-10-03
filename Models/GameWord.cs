@@ -21,8 +21,10 @@ namespace Lingo.Models
       public Word Word { get; set; }
       [Required]
       public Game Game { get; set; }
-      public List<string> WordProgress { get; set; } = new List<string>{ "", "", "", "", "" };
-      public List<int> WordLetterProgress { get; set; } = new List<int>{ 00000, 00000, 00000, 00000, 00000 };
+      public List<string> WordProgress { get; set; } = new List<string>{};
+      
+      // Todo: Remove wordletterprogress from db.
+      public List<int> WordLetterProgress { get; set; } = new List<int>{ 0, 0, 0, 0, 0, 0 };
       public bool Finished { get; set; } = false;
   }
 }

@@ -89,13 +89,20 @@ namespace Lingo.Services
 
             return gameDictionary;
         }
-
-        public GameWord CheckWord(int gameId, string word)
+    
+        public Dictionary<string, object> CheckGameWord(int gameId, string wordGuess)
         {
-            var game = FindGame(gameId);
-            var gameWord = FindGameWord(game);
-            var gameWordresult = _gameWordService.UpdateGameWord(gameWord, word);
-            return gameWordresult;
+            var game = _context.Game.Where(game => game.Id == gameId).Include(game => game.GameWords).FirstOrDefault();
+            var gameWord = _gameWordRepo.GetGameWordsByGame(game).First();
+            _gameWordRepo.AddSubmittedWord(gameWord, wordGuess);
+            _gameWordRepo.SaveChanges();
+
+            if (_gameWordRepo.FinishedGameWord(gameWord))
+            {
+                _gameWordRepo.FinishGameWord(gameWord);
+                _gameWordRepo.SaveChanges();
+            }
+            return GetGameData(game.Id);
         }
 
         public Dictionary<string, object> CheckFinalWord(int gameId, string finalWordGuess)

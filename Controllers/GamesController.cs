@@ -64,19 +64,20 @@ namespace Lingo.Controllers
       return NoContent();
     }
     
-    // SUBMIT WORD
-    [HttpGet("[action]/{gameId:int}/{word}")]
-    public GameWord Submitword(int gameId, string word)
-    {
-      return _gameService.CheckWord(gameId, word);
-    }
-    
     // SUBMIT FINAL WORD
     [Route("{gameId:int}/submitFinalWord/{finalWordGuess}")]
     [HttpGet]
     public Dictionary<string, object> SubmitFinalword(int gameId, string finalWordGuess)
     {
       return _gameService.CheckFinalWord(gameId, finalWordGuess);
+    }
+    
+    // SUBMIT WORD
+    [Route("{gameId:int}/submitWord/{wordGuess}")]
+    [HttpGet]
+    public Dictionary<string, object> SubmitWord(int gameId, string wordGuess)
+    {
+      return _gameService.CheckGameWord(gameId, wordGuess);
     }
   }
 }

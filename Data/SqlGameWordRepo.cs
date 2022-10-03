@@ -25,6 +25,22 @@ namespace Lingo.Data
     {
       return (_context.SaveChanges() >= 0);
     }
+
+    public void AddSubmittedWord(GameWord gameWord, String submittedWord)
+    {
+      gameWord.WordProgress.Add(submittedWord);
+    }
+
+    public bool FinishedGameWord(GameWord gameWord)
+    {
+      var word = gameWord.Word.Name;
+      return gameWord.WordProgress.Last() == word || gameWord.WordProgress.Count == 5;
+    }
+
+    public void FinishGameWord(GameWord gameWord)
+    {
+      gameWord.Finished = true;
+    }
     
     public GameWord GetGameWordById(int id)
     {
