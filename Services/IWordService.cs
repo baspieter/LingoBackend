@@ -5,6 +5,6 @@ namespace Lingo.Services
     public interface IWordService
     {
         Word SetWord();
-        Word SetGameWord(int[] usedWordIds);
+        Word SetGameWord(IEnumerable<int> usedWordIds);
     }
 }

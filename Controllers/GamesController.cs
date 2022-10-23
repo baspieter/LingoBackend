@@ -79,5 +79,13 @@ namespace Lingo.Controllers
     {
       return _gameService.CheckGameWord(gameId, wordGuess);
     }
+    
+    // NEXT ROUND
+    [Route("{gameId:int}/nextRound")]
+    [HttpGet]
+    public Dictionary<string, object> NextRound(int gameId)
+    {
+      return _gameService.NextRound(gameId);
+    }
   }
 }

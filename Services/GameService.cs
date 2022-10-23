@@ -121,9 +121,32 @@ namespace Lingo.Services
 
         public Word? NewGameWord(int gameId)
         {
-            var gameWords = FindGame(gameId)?.GameWords;
-            var usedWordIds = gameWords?.Select(gameWord => gameWord.Word.Id).ToArray();
-            return usedWordIds == null ? throw new ArgumentNullException() : _wordService.SetGameWord(usedWordIds);
+            var game = _context.Game.Where(game => game.Id == gameId).Include(game => game.GameWords).FirstOrDefault();
+            var gameWords = game?.GameWords;
+            IEnumerable<int> usedWordIds = new List<int>();
+
+            if (gameWords?.Count > 0)
+            {
+                usedWordIds = gameWords?.Select(gameWord => gameWord.Word.Id);
+            }
+    
+            return _wordService.SetGameWord(usedWordIds);
+        }
+
+        public Dictionary<string, object> NextRound(int gameId)
+        {
+            var game = _context.Game.Where(game => game.Id == gameId).FirstOrDefault();
+            var word = NewGameWord(gameId);
+            var gameWord = new GameWord
+            {
+                Game = game,
+                Word = word
+            };
+            
+            _gameWordRepo.CreateGameWord(gameWord);
+            _gameWordRepo.SaveChanges();
+            
+            return GetGameData(gameId);
         }
 
         private Game FindGame(int gameId)
@@ -134,7 +157,7 @@ namespace Lingo.Services
         private GameWord FindGameWord(Game game)
         {
             var gameWords = _gameWordRepo.GetGameWordsByGame(game);
-            var currentGameWord = gameWords.Include(a => a.Word).OrderBy(p => p.Finished == true).Last();
+            var currentGameWord = gameWords.Include(a => a.Word).OrderBy(p => p.Finished == false).Last();
             return currentGameWord;
         }
 

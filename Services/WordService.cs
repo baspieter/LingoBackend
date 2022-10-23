@@ -19,7 +19,7 @@ namespace Lingo.Services
             return words.First();
         }
 
-        public Word SetGameWord(int[] usedWordIds)
+        public Word SetGameWord(IEnumerable<int> usedWordIds)
         {
             return _wordRepo.GetAllWords().First(word => !usedWordIds.Contains(word.Id));
         }
