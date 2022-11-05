@@ -8,8 +8,8 @@ namespace Lingo.Services
         Game StartNewGame();
         Word? NewGameWord(int gameId);
         Dictionary<string, object> CheckFinalWord(int gameId, string finalWord);
-        Dictionary<string, object> CheckGameWord(int gameId, string word);
-        Dictionary<string, object> GetGameData(int gameId);
+        Dictionary<string, object> CheckGameWord(int gameWordId, string word);
+        Dictionary<string, object> GetGameData(int gameId, int gameWordId=0);
         Dictionary<string, object> NextRound(int gameId);
     }
 }

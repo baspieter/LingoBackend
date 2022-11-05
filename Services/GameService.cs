@@ -66,14 +66,15 @@ namespace Lingo.Services
             return game;
         }
 
-        public Dictionary<string, object> GetGameData(int gameId)
+        public Dictionary<string, object> GetGameData(int gameId, int gameWordId=0)
         {
             var gameDictionary = new Dictionary<string, object>();
             var game = FindGame(gameId);
             var gameDto = _mapper.Map<GameReadDto>(game);
             gameDictionary.Add("Game", gameDto);
 
-            var gameWord = FindGameWord(game);
+            var gameWord = gameWordId != 0 ? _gameWordRepo.GetGameWordById(gameWordId) : FindGameWord(game);
+            
             var gameWordDto = _mapper.Map<GameWordReadDto>(gameWord);
             gameDictionary.Add("Gameword", gameWordDto);
 
@@ -90,10 +91,10 @@ namespace Lingo.Services
             return gameDictionary;
         }
     
-        public Dictionary<string, object> CheckGameWord(int gameId, string wordGuess)
+        public Dictionary<string, object> CheckGameWord(int gameWordId, string wordGuess)
         {
-            var game = _context.Game.Where(game => game.Id == gameId).Include(game => game.GameWords).FirstOrDefault();
-            var gameWord = _gameWordRepo.GetGameWordsByGame(game).First();
+            var gameWord = _gameWordRepo.GetGameWordById(gameWordId);
+            var game = _context.Game.Where(game => game.Id == gameWord.Game.Id).FirstOrDefault();
             _gameWordRepo.AddSubmittedWord(gameWord, wordGuess);
             _gameWordRepo.SaveChanges();
 
@@ -102,9 +103,8 @@ namespace Lingo.Services
                 _gameWordRepo.FinishGameWord(gameWord);
                 _gameWordRepo.SaveChanges();
             }
-            return GetGameData(game.Id);
+            return GetGameData(game.Id, gameWord.Id);
         }
-
         public Dictionary<string, object> CheckFinalWord(int gameId, string finalWordGuess)
         {
             var game = _context.Game.Where(game => game.Id == gameId).Include(game => game.FinalWord).FirstOrDefault();
@@ -158,6 +158,7 @@ namespace Lingo.Services
         {
             var gameWords = _gameWordRepo.GetGameWordsByGame(game);
             var currentGameWord = gameWords.Include(a => a.Word).OrderBy(p => p.Finished == false).Last();
+            
             return currentGameWord;
         }
 

@@ -73,11 +73,11 @@ namespace Lingo.Controllers
     }
     
     // SUBMIT WORD
-    [Route("{gameId:int}/submitWord/{wordGuess}")]
+    [Route("{gameWordId:int}/submitWord/{wordGuess}")]
     [HttpGet]
-    public Dictionary<string, object> SubmitWord(int gameId, string wordGuess)
+    public Dictionary<string, object> SubmitWord(int gameWordId, string wordGuess)
     {
-      return _gameService.CheckGameWord(gameId, wordGuess);
+      return _gameService.CheckGameWord(gameWordId, wordGuess);
     }
     
     // NEXT ROUND

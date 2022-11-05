@@ -44,13 +44,7 @@ namespace Lingo.Data
     
     public GameWord GetGameWordById(int id)
     {
-      var gameWord = _context.GameWord.FirstOrDefault(p => p.Id == id);
-      if(gameWord != null)
-      {
-        return gameWord;
-      } else {
-        throw new ArgumentNullException(nameof(gameWord));
-      }
+      return _context.GameWord.Where(p => p.Id == id).Include(gameWord => gameWord.Word).Include( gameWord => gameWord.Game).FirstOrDefault();
     }
 
     public IQueryable<GameWord> GetGameWordsByGame(Game game)
