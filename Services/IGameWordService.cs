@@ -4,6 +4,6 @@ namespace Lingo.Services
 {
     public interface IGameWordService
     {
-        GameWord UpdateGameWord(GameWord gameWord, string word);
+        // GameWord UpdateGameWord(GameWord gameWord, string word);
     }
 }

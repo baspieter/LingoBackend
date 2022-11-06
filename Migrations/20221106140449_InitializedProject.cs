@@ -44,7 +44,7 @@ namespace Lingo.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     round = table.Column<int>(type: "integer", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false),
-                    final_word_progress = table.Column<List<char>>(type: "character(1)[]", nullable: false),
+                    final_word_progress = table.Column<string>(type: "text", nullable: false),
                     green_balls = table.Column<int>(type: "integer", nullable: false),
                     red_balls = table.Column<int>(type: "integer", nullable: false),
                     final_word_id = table.Column<int>(type: "integer", nullable: false)
@@ -69,7 +69,6 @@ namespace Lingo.Migrations
                     word_id = table.Column<int>(type: "integer", nullable: false),
                     game_id = table.Column<int>(type: "integer", nullable: false),
                     word_progress = table.Column<List<string>>(type: "text[]", nullable: false),
-                    word_letter_progress = table.Column<List<int>>(type: "integer[]", nullable: false),
                     finished = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>

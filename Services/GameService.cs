@@ -40,8 +40,8 @@ namespace Lingo.Services
         {
             var word = _wordService.SetWord();
             var finalWord = _finalWordService.SetFinalWord();
-            String finalWordProgress = updateFinalWordProgress(finalWord.Name, new string(""));
-            if (word == null || finalWord == null)
+            String finalWordProgress = _finalWordService.finalWordProgress(finalWord.Name, new string(""));
+            if (word == null || finalWord?.Name == null)
             {
                 throw new ArgumentNullException();
             }
@@ -94,14 +94,19 @@ namespace Lingo.Services
         public Dictionary<string, object> CheckGameWord(int gameWordId, string wordGuess)
         {
             var gameWord = _gameWordRepo.GetGameWordById(gameWordId);
-            var game = _context.Game.Where(game => game.Id == gameWord.Game.Id).FirstOrDefault();
+            var game = _context.Game.Where(game => game.Id == gameWord.Game.Id).Include(a => a.FinalWord).FirstOrDefault();
             _gameWordRepo.AddSubmittedWord(gameWord, wordGuess);
             _gameWordRepo.SaveChanges();
 
             if (_gameWordRepo.FinishedGameWord(gameWord))
             {
                 _gameWordRepo.FinishGameWord(gameWord);
+                if (wordGuess == gameWord.Word.Name)
+                {
+                    game.FinalWordProgress = _finalWordService.addFinalWordHint(game.FinalWord.Name, game.FinalWordProgress);
+                }
                 _gameWordRepo.SaveChanges();
+                _gameRepo.SaveChanges();
             }
             return GetGameData(game.Id, gameWord.Id);
         }
@@ -167,30 +172,6 @@ namespace Lingo.Services
             game.Status = Status.Finished;
             game.FinalWordProgress = game.FinalWord.Name;
             _gameRepo.SaveChanges();
-        }
-
-        private String updateFinalWordProgress(String finalWord, String guessedWord)
-        {
-            var guessedWordChars = new List<char>(guessedWord);
-            if (guessedWord == finalWord)
-            {
-                return new string(guessedWordChars.ToArray());
-            }
-        
-            var finalWordChars = new List<char>(finalWord);
-            var newFinalWordProgress = new List<char>();
-            for(var i = 0; i < finalWordChars.Count; i++)
-            {
-                if (guessedWordChars.Count != finalWordChars.Count || finalWordChars[i] != guessedWordChars[i])
-                {
-                    newFinalWordProgress.Add('.');
-                }
-                else
-                {
-                    newFinalWordProgress.Add(finalWordChars[i]);
-                }
-            }
-            return new string(newFinalWordProgress.ToArray());
         }
     }
 }

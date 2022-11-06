@@ -56,9 +56,9 @@ namespace Lingo.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("final_word_id");
 
-                    b.Property<List<char>>("FinalWordProgress")
+                    b.Property<string>("FinalWordProgress")
                         .IsRequired()
-                        .HasColumnType("character(1)[]")
+                        .HasColumnType("text")
                         .HasColumnName("final_word_progress");
 
                     b.Property<int>("GreenBalls")
@@ -106,11 +106,6 @@ namespace Lingo.Migrations
                     b.Property<int>("WordId")
                         .HasColumnType("integer")
                         .HasColumnName("word_id");
-
-                    b.Property<List<int>>("WordLetterProgress")
-                        .IsRequired()
-                        .HasColumnType("integer[]")
-                        .HasColumnName("word_letter_progress");
 
                     b.Property<List<string>>("WordProgress")
                         .IsRequired()
