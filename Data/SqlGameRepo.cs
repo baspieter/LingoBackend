@@ -1,4 +1,5 @@
 using Lingo.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lingo.Data
 {
@@ -27,7 +28,7 @@ namespace Lingo.Data
 
     public Game GetGameById(int id)
     {
-      var game = _context.Game.FirstOrDefault(p => p.Id == id);
+      var game = _context.Game.Where(game => game.Id == id).Include(a => a.FinalWord).FirstOrDefault();
       if(game != null)
       {
         return game;

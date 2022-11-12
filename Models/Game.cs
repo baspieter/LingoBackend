@@ -12,7 +12,7 @@ namespace Lingo.Models
     public int Id { get; set; }
     
     [Required]
-    public int Round { get; set; } = 0;
+    public int Round { get; set; } = 1;
     
     [Required]
     public Status Status { get; set; } = Status.Active;

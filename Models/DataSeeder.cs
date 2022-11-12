@@ -42,6 +42,30 @@ namespace Lingo.Models
                 new()
                 {
                     Name = "rokjes"
+                },
+                new()
+                {
+                    Name = "agenda"
+                },
+                new()
+                {
+                    Name = "bedrag"
+                },
+                new()
+                {
+                    Name = "campus"
+                },
+                new()
+                {
+                    Name = "dienst"
+                },
+                new()
+                {
+                    Name = "drukte"
+                },
+                new()
+                {
+                    Name = "gitaar"
                 }
             };
             

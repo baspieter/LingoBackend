@@ -105,6 +105,9 @@ namespace Lingo.Services
                 {
                     game.FinalWordProgress = _finalWordService.addFinalWordHint(game.FinalWord.Name, game.FinalWordProgress);
                 }
+
+                var number = game.Round;
+                game.Round = number + 1;
                 _gameWordRepo.SaveChanges();
                 _gameRepo.SaveChanges();
             }
