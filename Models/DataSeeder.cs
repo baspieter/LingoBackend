@@ -66,6 +66,22 @@ namespace Lingo.Models
                 new()
                 {
                     Name = "gitaar"
+                },
+                new()
+                {
+                    Name = "darten"
+                },
+                new()
+                {
+                    Name = "katten"
+                },
+                new()
+                {
+                    Name = "matjes"
+                },
+                new()
+                {
+                    Name = "oranje"
                 }
             };
             
@@ -78,11 +94,11 @@ namespace Lingo.Models
             {
                 new()
                 {
-                    Name = "Kerstmisfeest"
+                    Name = "kerstmisfeest"
                 },
                 new()
                 {
-                    Name = "Proteineshaker"
+                    Name = "proteineshaker"
                 }
             };
             

@@ -107,7 +107,14 @@ namespace Lingo.Services
                 }
 
                 var number = game.Round;
-                game.Round = number + 1;
+                if (game.Round == 10)
+                {
+                    FinishGame(game, false);
+                }
+                else
+                {
+                    game.Round = number + 1;
+                }
                 _gameWordRepo.SaveChanges();
                 _gameRepo.SaveChanges();
             }
@@ -121,7 +128,7 @@ namespace Lingo.Services
 
             if (originalFinalWord == finalWordGuess)
             {
-                FinishGame(game);
+                FinishGame(game, true);
             }
 
             return GetGameData(gameId);
@@ -170,10 +177,13 @@ namespace Lingo.Services
             return currentGameWord;
         }
 
-        private void FinishGame(Game game)
+        private void FinishGame(Game game, Boolean success)
         {
             game.Status = Status.Finished;
-            game.FinalWordProgress = game.FinalWord.Name;
+            if (success)
+            {
+                game.FinalWordProgress = game.FinalWord.Name;
+            }
             _gameRepo.SaveChanges();
         }
     }

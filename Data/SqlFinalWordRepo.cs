@@ -22,7 +22,6 @@ namespace Lingo.Data
       if(finalWord == null) {
         throw new ArgumentNullException(nameof(finalWord));
       }
-
       _context.FinalWord.Add(finalWord);
     }
 
