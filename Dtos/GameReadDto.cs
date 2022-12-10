@@ -8,7 +8,6 @@ namespace Lingo.Dtos
     public int Round { get; set; }
     public Status Status { get; init; }
     public String FinalWordProgress { get; set; }
-    public int GreenBalls { get; set; }
-    public int RedBalls { get; set; }
+    public int Timer { get; set; }
   }
 }

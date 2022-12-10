@@ -19,12 +19,10 @@ namespace Lingo.Models
 
     [Required]
     public String FinalWordProgress { get; set; } = new String("");
-    
+
     [Required]
-    public int GreenBalls { get; set; } = 2;
-    
-    [Required]
-    public int RedBalls { get; set; } = 2;
+    public int Timer { get; set; } = 0;
+
     public FinalWord FinalWord { get; set; }
     [Required]
     public ICollection<GameWord> GameWords { get; set; }

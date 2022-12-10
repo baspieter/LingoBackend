@@ -91,7 +91,7 @@ namespace Lingo.Services
             return gameDictionary;
         }
     
-        public Dictionary<string, object> CheckGameWord(int gameWordId, string wordGuess)
+        public Dictionary<string, object> CheckGameWord(int gameWordId, string wordGuess, int timer)
         {
             var gameWord = _gameWordRepo.GetGameWordById(gameWordId);
             var game = _context.Game.Where(game => game.Id == gameWord.Game.Id).Include(a => a.FinalWord).FirstOrDefault();
@@ -115,12 +115,14 @@ namespace Lingo.Services
                 {
                     game.Round = number + 1;
                 }
-                _gameWordRepo.SaveChanges();
-                _gameRepo.SaveChanges();
             }
+
+            UpdateTimer(game, timer);
+            _gameWordRepo.SaveChanges();
+            _gameRepo.SaveChanges();
             return GetGameData(game.Id, gameWord.Id);
         }
-        public Dictionary<string, object> CheckFinalWord(int gameId, string finalWordGuess)
+        public Dictionary<string, object> CheckFinalWord(int gameId, string finalWordGuess, int timer)
         {
             var game = _context.Game.Where(game => game.Id == gameId).Include(game => game.FinalWord).FirstOrDefault();
             var originalFinalWord = game.FinalWord.Name;
@@ -128,9 +130,16 @@ namespace Lingo.Services
 
             if (originalFinalWord == finalWordGuess)
             {
+                game.Timer = timer;
                 FinishGame(game, true);
             }
+            else
+            {
+                UpdateTimer(game, timer);
+                _gameRepo.SaveChanges();
+            }
 
+            
             return GetGameData(gameId);
         }
 
@@ -148,7 +157,7 @@ namespace Lingo.Services
             return _wordService.SetGameWord(usedWordIds);
         }
 
-        public Dictionary<string, object> NextRound(int gameId)
+        public Dictionary<string, object> NextRound(int gameId, int timer)
         {
             var game = _context.Game.Where(game => game.Id == gameId).FirstOrDefault();
             var word = NewGameWord(gameId);
@@ -157,11 +166,34 @@ namespace Lingo.Services
                 Game = game,
                 Word = word
             };
+
+            UpdateTimer(game, timer);
             
             _gameWordRepo.CreateGameWord(gameWord);
             _gameWordRepo.SaveChanges();
             
             return GetGameData(gameId);
+        }
+        
+        public Dictionary<string, object> UpdateTimer(int gameId, int timer)
+        {
+            var game = _context.Game.Where(game => game.Id == gameId).FirstOrDefault();
+            UpdateTimer(game, timer);
+
+            _gameWordRepo.SaveChanges();
+            
+            return GetGameData(gameId);
+        }
+
+        private void UpdateTimer(Game game, int timer)
+        {
+            if (game.Status == Status.Finished) return;
+            
+            game.Timer = timer;
+            if (timer == 0)
+            {
+                FinishGame(game, false);
+            }
         }
 
         private Game FindGame(int gameId)

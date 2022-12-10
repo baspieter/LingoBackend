@@ -12,9 +12,7 @@ namespace Lingo.Dtos
     [Required]
     public String FinalWordProgress { get; set; }
     [Required]
-    public int GreenBalls { get; set; }
-    [Required]
-    public int RedBalls { get; set; }
+    public int Timer { get; set; }
     [Required]
     public FinalWord? FinalWord { get; set; }
     public IList<GameWord>? GameWords { get; set; }
