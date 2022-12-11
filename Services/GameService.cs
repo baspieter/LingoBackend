@@ -190,10 +190,6 @@ namespace Lingo.Services
             if (game.Status == Status.Finished) return;
             
             game.Timer = timer;
-            if (timer == 0)
-            {
-                FinishGame(game, false);
-            }
         }
 
         private Game FindGame(int gameId)
