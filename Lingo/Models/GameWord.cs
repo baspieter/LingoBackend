@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Lingo.Models;
 
 namespace Lingo.Models
@@ -21,6 +22,7 @@ namespace Lingo.Models
       public Word Word { get; set; }
       [Required]
       public Game Game { get; set; }
+      [NotMapped]
       public List<string> WordProgress { get; set; } = new List<string>{};
       public bool Finished { get; set; } = false;
   }
