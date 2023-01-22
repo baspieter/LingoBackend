@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Lingo.Migrations
 {
     [DbContext(typeof(LingoContext))]
-    [Migration("20221106140449_InitializedProject")]
-    partial class InitializedProject
+    [Migration("20230122190602_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,14 +63,6 @@ namespace Lingo.Migrations
                         .HasColumnType("text")
                         .HasColumnName("final_word_progress");
 
-                    b.Property<int>("GreenBalls")
-                        .HasColumnType("integer")
-                        .HasColumnName("green_balls");
-
-                    b.Property<int>("RedBalls")
-                        .HasColumnType("integer")
-                        .HasColumnName("red_balls");
-
                     b.Property<int>("Round")
                         .HasColumnType("integer")
                         .HasColumnName("round");
@@ -78,6 +70,10 @@ namespace Lingo.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer")
                         .HasColumnName("status");
+
+                    b.Property<int>("Timer")
+                        .HasColumnType("integer")
+                        .HasColumnName("timer");
 
                     b.HasKey("Id")
                         .HasName("pk_game");

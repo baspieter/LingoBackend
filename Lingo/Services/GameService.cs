@@ -84,12 +84,7 @@ namespace Lingo.Services
 
             return gameDictionary;
         }
-        
-        public int testen()
-        {
-            return 5;
-        }
-    
+
         public Dictionary<string, object> CheckGameWord(int gameWordId, string wordGuess, int timer)
         {
             var gameWord = _gameWordRepo.GetGameWordById(gameWordId);

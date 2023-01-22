@@ -15,7 +15,7 @@ namespace Lingo.Data
     public DbSet<Game> Game { get; set; }
     public DbSet<GameWord> GameWord { get; set; }
     public DbSet<FinalWord> FinalWord { get; set; }
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<FinalWord>()

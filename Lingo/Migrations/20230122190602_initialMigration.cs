@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Lingo.Migrations
 {
-    public partial class InitializedProject : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,8 +45,7 @@ namespace Lingo.Migrations
                     round = table.Column<int>(type: "integer", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false),
                     final_word_progress = table.Column<string>(type: "text", nullable: false),
-                    green_balls = table.Column<int>(type: "integer", nullable: false),
-                    red_balls = table.Column<int>(type: "integer", nullable: false),
+                    timer = table.Column<int>(type: "integer", nullable: false),
                     final_word_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
