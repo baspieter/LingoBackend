@@ -2,14 +2,8 @@ using System.Text.Json;
 using AutoMapper;
 using Lingo.Data;
 using Lingo.Dtos;
-
 using Lingo.Models;
 using Microsoft.EntityFrameworkCore;
-
-using AutoMapper;
-using Lingo.Data;
-using Lingo.Dtos;
-using Lingo.Models;
 using Lingo.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -89,6 +83,11 @@ namespace Lingo.Services
             gameDictionary.Add("Finalword", finalWordDto);
 
             return gameDictionary;
+        }
+        
+        public int testen()
+        {
+            return 5;
         }
     
         public Dictionary<string, object> CheckGameWord(int gameWordId, string wordGuess, int timer)
