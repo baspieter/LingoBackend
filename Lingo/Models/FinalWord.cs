@@ -4,6 +4,7 @@ namespace Lingo.Models
 {
   public class FinalWord
   {
+      [Key]
       public int Id { get; set; }
 
       [Required]
