@@ -26,15 +26,10 @@ namespace Lingo.Data
       return (_context.SaveChanges() >= 0);
     }
 
-    public void AddSubmittedWord(GameWord gameWord, String submittedWord)
-    {
-      gameWord.WordProgress.Add(submittedWord);
-    }
-
     public bool FinishedGameWord(GameWord gameWord)
     {
       var word = gameWord.Word.Name;
-      return gameWord.WordProgress.Last() == word || gameWord.WordProgress.Count == 5;
+      return gameWord.WordEntries.LastOrDefault().Name == word || gameWord.WordEntries.Count == 5;
     }
 
     public void FinishGameWord(GameWord gameWord)
@@ -44,7 +39,7 @@ namespace Lingo.Data
     
     public GameWord GetGameWordById(int id)
     {
-      return _context.GameWord.Where(p => p.Id == id).Include(gameWord => gameWord.Word).Include( gameWord => gameWord.Game).FirstOrDefault();
+      return _context.GameWord.Where(p => p.Id == id).Include(gameWord => gameWord.Word).Include( gameWord => gameWord.Game).Include(gameWord => gameWord.WordEntries).FirstOrDefault();
     }
 
     public IQueryable<GameWord> GetGameWordsByGame(Game game)

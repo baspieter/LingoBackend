@@ -15,6 +15,7 @@ namespace Lingo.Data
     public DbSet<Game> Game { get; set; }
     public DbSet<GameWord> GameWord { get; set; }
     public DbSet<FinalWord> FinalWord { get; set; }
+    public DbSet<WordEntry> WordEntry { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,6 +42,10 @@ namespace Lingo.Data
         modelBuilder.Entity<GameWord>()
             .HasOne(c => c.Word)
             .WithMany(e => e.GameWords);
+
+		modelBuilder.Entity<WordEntry>()
+            .HasOne(c => c.GameWord)
+            .WithMany(e => e.WordEntries);
     }
   }
 }

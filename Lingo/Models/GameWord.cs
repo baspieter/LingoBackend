@@ -22,8 +22,7 @@ namespace Lingo.Models
       public Word Word { get; set; }
       [Required]
       public Game Game { get; set; }
-      [NotMapped]
-      public List<string> WordProgress { get; set; } = new List<string>{};
+      public ICollection<WordEntry>? WordEntries { get; set; }
       public bool Finished { get; set; } = false;
   }
 }

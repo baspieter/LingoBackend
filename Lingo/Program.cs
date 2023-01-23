@@ -23,6 +23,8 @@ builder.Services.AddScoped<IFinalWordRepo, SqlFinalWordRepo>();
 
 builder.Services.AddScoped<IGameWordRepo, SqlGameWordRepo>();
 
+builder.Services.AddScoped<IWordEntryRepo, SqlWordEntryRepo>();
+
 builder.Services.AddScoped<IFinalWordService, FinalWordService>();
 
 builder.Services.AddScoped<IGameService, GameService>();

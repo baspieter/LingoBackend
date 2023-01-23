@@ -13,16 +13,18 @@ namespace Lingo.Services
     {
         private readonly IGameRepo _gameRepo;
         private readonly IGameWordRepo _gameWordRepo;
+        private readonly IWordEntryRepo _wordEntryRepo;
         private readonly IFinalWordService _finalWordService;
         private readonly IWordService _wordService;
         private readonly IGameWordService _gameWordService;
         private readonly LingoContext _context;
         public IMapper _mapper { get; }
 
-        public GameService(IGameRepo gameRepo, IGameWordRepo gameWordRepo, IFinalWordService finalWordService, IWordService wordService, IGameWordService gameWordService, IMapper mapper, LingoContext context)
+        public GameService(IGameRepo gameRepo, IWordEntryRepo wordEntryRepo, IGameWordRepo gameWordRepo, IFinalWordService finalWordService, IWordService wordService, IGameWordService gameWordService, IMapper mapper, LingoContext context)
         {
             _gameRepo = gameRepo;
             _gameWordRepo = gameWordRepo;
+            _wordEntryRepo = wordEntryRepo;
             _finalWordService = finalWordService;
             _wordService = wordService;
             _gameWordService = gameWordService;
@@ -87,10 +89,15 @@ namespace Lingo.Services
 
         public Dictionary<string, object> CheckGameWord(int gameWordId, string wordGuess, int timer)
         {
-            var gameWord = _gameWordRepo.GetGameWordById(gameWordId);
+            GameWord gameWord = _gameWordRepo.GetGameWordById(gameWordId);
             var game = _context.Game.Where(game => game.Id == gameWord.Game.Id).Include(a => a.FinalWord).FirstOrDefault();
-            _gameWordRepo.AddSubmittedWord(gameWord, wordGuess);
-            _gameWordRepo.SaveChanges();
+            WordEntry wordEntry = new WordEntry()
+            {
+                GameWord = gameWord,
+                Name = wordGuess
+            };
+            _wordEntryRepo.CreateWordEntry(wordEntry);
+            _wordEntryRepo.SaveChanges();
 
             if (_gameWordRepo.FinishedGameWord(gameWord))
             {

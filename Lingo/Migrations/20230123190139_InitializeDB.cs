@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace Lingo.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class InitializeDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,7 +66,6 @@ namespace Lingo.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     word_id = table.Column<int>(type: "integer", nullable: false),
                     game_id = table.Column<int>(type: "integer", nullable: false),
-                    word_progress = table.Column<List<string>>(type: "text[]", nullable: false),
                     finished = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -87,6 +85,26 @@ namespace Lingo.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "word_entry",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "character varying(6)", maxLength: 6, nullable: false),
+                    game_word_id = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_word_entry", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_word_entry_game_word_game_word_id",
+                        column: x => x.game_word_id,
+                        principalTable: "game_word",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "ix_game_final_word_id",
                 table: "game",
@@ -101,10 +119,18 @@ namespace Lingo.Migrations
                 name: "ix_game_word_word_id",
                 table: "game_word",
                 column: "word_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_word_entry_game_word_id",
+                table: "word_entry",
+                column: "game_word_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "word_entry");
+
             migrationBuilder.DropTable(
                 name: "game_word");
 
