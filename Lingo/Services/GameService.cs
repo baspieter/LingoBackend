@@ -73,8 +73,8 @@ namespace Lingo.Services
             
             var gameWordDto = _mapper.Map<GameWordReadDto>(gameWord);
             gameDictionary.Add("Gameword", gameWordDto);
-
-                var word = gameWord?.Word;
+            
+            var word = gameWord?.Word;
             if (word != null)
             {
                 var wordDto = _mapper.Map<WordReadDto>(word);
